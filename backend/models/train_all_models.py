@@ -1,5 +1,5 @@
 """
-KrishiYield — End-to-End Data Preprocessing, Benchmarking & Hyperparameter Tuning Pipeline
+CropSense AI — End-to-End Data Preprocessing, Benchmarking & Hyperparameter Tuning Pipeline
 Based on Iniyan & Jebakumar (2021) and Chattopadhyay, Sinha, & Iniyan S.
 """
 
@@ -45,7 +45,7 @@ from sklearn.svm import SVR
 import xgboost as xgb
 import lightgbm as lgb
 
-PROJ_DIR = r"C:\Users\chatt\.gemini\antigravity\scratch\krishiyield"
+PROJ_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RAW_DIR = os.path.join(PROJ_DIR, "data", "raw")
 PROC_DIR = os.path.join(PROJ_DIR, "data", "processed")
 MODEL_DIR = os.path.join(PROJ_DIR, "backend", "models")
@@ -385,7 +385,7 @@ def run_benchmarks_and_tuning(crop_name, pruned_df):
 if __name__ == '__main__':
     t_start = time.time()
     print("=" * 60)
-    print("  KRISHIYIELD MASTER PIPELINE: PREPROCESSING & TRAINING")
+    print("  CROPSENSE AI MASTER PIPELINE: PREPROCESSING & TRAINING")
     print("=" * 60)
     
     # 1. Preprocess both crops

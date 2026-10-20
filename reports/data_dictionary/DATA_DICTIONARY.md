@@ -1,8 +1,8 @@
-# KrishiYield: Comprehensive Agricultural Data Dictionary & Research Mapping
+# CropSense AI: Comprehensive Agricultural Data Dictionary & Research Mapping
 
 ## 1. Executive Summary & Provenance
 
-The **KrishiYield** platform utilizes two benchmark agricultural datasets spanning **39 years (1980–2018)** across **105 major agricultural counties** in 13 states of the United States Corn and Soybean Belt (Illinois, Iowa, Indiana, Ohio, Minnesota, Missouri, Nebraska, South Dakota, North Dakota, Kansas, Wisconsin, Michigan, Kentucky).
+The **CropSense AI** platform utilizes two benchmark agricultural datasets spanning **39 years (1980–2018)** across **105 major agricultural counties** in 13 states of the United States Corn and Soybean Belt (Illinois, Iowa, Indiana, Ohio, Minnesota, Missouri, Nebraska, South Dakota, North Dakota, Kansas, Wisconsin, Michigan, Kentucky).
 
 ### Core Literature Foundation
 1. **Iniyan, S., & Jebakumar, R. (2021/2022).** *"Mutual Information Feature Selection (MIFS) Based Crop Yield Prediction on Corn and Soybean Crops Using Multilayer Stacked Ensemble Regression (MSER)."* *Wireless Personal Communications*, 126(3), 1935–1964. [DOI: 10.1007/s11277-021-08712-9](https://doi.org/10.1007/s11277-021-08712-9)
@@ -20,7 +20,7 @@ The **KrishiYield** platform utilizes two benchmark agricultural datasets spanni
 | **Soybean (*Glycine max*)** | `Yield` | **Bushels per Acre (bu/acre)** (60 lb/bu) | 1 bu/acre = 0.06725 t/ha (67.25 kg/ha) | 1 bu/acre = 0.2722 quintal/acre | 13.00 – 82.30 bu/acre | 42.49 ± 10.14 bu/acre |
 
 > [!NOTE]
-> In agricultural practice, a bushel is a unit of volume standardized by weight: **56 pounds for shelled corn** and **60 pounds for soybeans**. For international and Indian farming contexts, KrishiYield provides seamless unit toggling to **Quintals per Acre** and **Metric Tons per Hectare (t/ha)**.
+> In agricultural practice, a bushel is a unit of volume standardized by weight: **56 pounds for shelled corn** and **60 pounds for soybeans**. For international and Indian farming contexts, CropSense AI provides seamless unit toggling to **Quintals per Acre** and **Metric Tons per Hectare (t/ha)**.
 
 ---
 
@@ -93,7 +93,7 @@ Agronomic Impact: Early planting allows crops to utilize maximum solar radiation
 
 ## 4. Feature Engineering & Farmer Translation Strategy
 
-While research models require hundreds of granular sensor inputs, **practical agricultural users think in aggregate seasonal concepts**. KrishiYield bridges this gap through dual interfaces:
+While research models require hundreds of granular sensor inputs, **practical agricultural users think in aggregate seasonal concepts**. CropSense AI bridges this gap through dual interfaces:
 
 1. **Farmer-Intuitive Mode**:
    - Location / Agroecological Region

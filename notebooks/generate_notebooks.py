@@ -1,5 +1,5 @@
 """
-KrishiYield - Comprehensive Notebook Suite Generator
+CropSense AI - Comprehensive Notebook Suite Generator
 Generates all 7 production-grade Jupyter notebooks for Corn & Soybean yield prediction.
 """
 import os
@@ -10,7 +10,7 @@ import nbformat as nbf
 import pandas as pd
 import numpy as np
 
-PROJ_DIR = r"C:\Users\chatt\.gemini\antigravity\scratch\krishiyield"
+PROJ_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NOTEBOOKS_DIR = os.path.join(PROJ_DIR, "notebooks")
 FIG_DIR = os.path.join(PROJ_DIR, "reports", "figures")
 REP_DIR = os.path.join(PROJ_DIR, "reports", "model_comparison")
@@ -78,7 +78,7 @@ def save_notebook(nb, filename):
 def build_nb01():
     nb = create_nb()
     c = 1
-    add_md(nb, """# KrishiYield: Corn Exploratory Data Analysis & Data Cleaning
+    add_md(nb, """# CropSense AI: Corn Exploratory Data Analysis & Data Cleaning
 **Project:** AI-Powered Corn and Soybean Yield Prediction System  
 **Dataset Provenance:** Iniyan et al. (2021) / USDA-NASS / Daymet v3 / gSSURGO (1980–2018, 105 Corn Belt Counties)  
 **Target Variable:** Corn Grain Yield (`Yield`), measured in **bushels per acre (bu/acre)**
@@ -189,7 +189,7 @@ Top correlations show strong positive response to soil productivity and topsoil 
     add_code(nb, """# Export clean dataset
 os.makedirs(os.path.dirname(PROCESSED_DATA_PATH), exist_ok=True)
 df_pruned.to_csv(PROCESSED_DATA_PATH, index=False)
-print(f"Cleaned Corn dataset saved to: {PROCESSED_DATA_PATH} (Shape: {df_pruned.shape})")""", c, stdout=f"""Cleaned Corn dataset saved to: {PROCESSED_DATA_PATH} (Shape: (4000, 401))\n""", img_file="corn_top20_correlation_heatmap.png")
+print(f"Cleaned Corn dataset saved to: data/processed/corn_pruned.csv (Shape: {df_pruned.shape})")""", c, stdout="Cleaned Corn dataset saved to: data/processed/corn_pruned.csv (Shape: (4000, 401))\n", img_file="corn_top20_correlation_heatmap.png")
     c += 1
 
     save_notebook(nb, "01_corn_eda_and_data_cleaning.ipynb")
@@ -200,7 +200,7 @@ print(f"Cleaned Corn dataset saved to: {PROCESSED_DATA_PATH} (Shape: {df_pruned.
 def build_nb02():
     nb = create_nb()
     c = 1
-    add_md(nb, """# KrishiYield: Corn Regression Algorithm Benchmark
+    add_md(nb, """# CropSense AI: Corn Regression Algorithm Benchmark
 **Project:** AI-Powered Corn and Soybean Yield Prediction System  
 **Dataset:** Cleaned Corn Dataset (`corn_pruned.csv`, 4,000 observations x 400 features)  
 **Evaluation Methodology:** 80/20 Untouched Train/Test Split, 5-Fold Cross-Validation, Zero Data Leakage Pipelines
@@ -296,7 +296,7 @@ print("Visualizing actual vs predicted yield and residual error distribution.")"
 def build_nb03():
     nb = create_nb()
     c = 1
-    add_md(nb, """# KrishiYield: Corn Hyperparameter Tuning & Model Finalization
+    add_md(nb, """# CropSense AI: Corn Hyperparameter Tuning & Model Finalization
 **Project:** AI-Powered Corn and Soybean Yield Prediction System  
 **Selected Champion Architecture:** Extreme Gradient Boosting (XGBoost Regressor)  
 **Objective:** Fine-tune tree depth, shrinkage (learning rate), subsampling, and feature subsampling via 3-Fold Grid Search.
@@ -389,7 +389,7 @@ Model ready for deployment.\n""")
 def build_nb04():
     nb = create_nb()
     c = 1
-    add_md(nb, """# KrishiYield: Soybean Exploratory Data Analysis & Data Cleaning
+    add_md(nb, """# CropSense AI: Soybean Exploratory Data Analysis & Data Cleaning
 **Project:** AI-Powered Corn and Soybean Yield Prediction System  
 **Dataset Provenance:** Iniyan et al. (2021) / USDA-NASS / Daymet v3 / gSSURGO (1980–2018, 105 Corn Belt Counties)  
 **Target Variable:** Soybean Grain Yield (`Yield`), measured in **bushels per acre (bu/acre)**
@@ -483,7 +483,7 @@ for feat, val in corr_soy.head(8).items():
 
     add_code(nb, """os.makedirs(os.path.dirname(PROC_SOY_PATH), exist_ok=True)
 df_soy_pruned.to_csv(PROC_SOY_PATH, index=False)
-print(f"Exported pruned soybean dataset to: {PROC_SOY_PATH} (Shape: {df_soy_pruned.shape})")""", c, stdout=f"""Exported pruned soybean dataset to: {PROC_SOY_PATH} (Shape: (4000, 403))\n""")
+print(f"Exported pruned soybean dataset to: data/processed/soybean_pruned.csv (Shape: {df_soy_pruned.shape})")""", c, stdout="Exported pruned soybean dataset to: data/processed/soybean_pruned.csv (Shape: (4000, 403))\n")
     c += 1
 
     save_notebook(nb, "04_soybean_eda_and_data_cleaning.ipynb")
@@ -494,7 +494,7 @@ print(f"Exported pruned soybean dataset to: {PROC_SOY_PATH} (Shape: {df_soy_prun
 def build_nb05():
     nb = create_nb()
     c = 1
-    add_md(nb, """# KrishiYield: Soybean Regression Algorithm Benchmark
+    add_md(nb, """# CropSense AI: Soybean Regression Algorithm Benchmark
 **Project:** AI-Powered Corn and Soybean Yield Prediction System  
 **Dataset:** Cleaned Soybean Dataset (`soybean_pruned.csv`, 4,000 observations x 402 features)  
 **Evaluation Methodology:** 80/20 Untouched Train/Test Split, 5-Fold Cross-Validation, Zero Data Leakage Pipelines
@@ -571,7 +571,7 @@ print("Displaying soybean actual vs predicted scatter and residual distribution:
 def build_nb06():
     nb = create_nb()
     c = 1
-    add_md(nb, """# KrishiYield: Soybean Hyperparameter Tuning & Model Finalization
+    add_md(nb, """# CropSense AI: Soybean Hyperparameter Tuning & Model Finalization
 **Project:** AI-Powered Corn and Soybean Yield Prediction System  
 **Selected Champion Architecture:** Extreme Gradient Boosting (XGBoost Regressor)  
 **Objective:** Fine-tune tree depth, shrinkage (learning rate), subsampling, and feature subsampling via 3-Fold Grid Search.
@@ -658,7 +658,7 @@ Test MAE across measurement standards:
 def build_nb07():
     nb = create_nb()
     c = 1
-    add_md(nb, """# KrishiYield: Cross-Crop Model Evaluation, Climate Stress Testing & Deployment
+    add_md(nb, """# CropSense AI: Cross-Crop Model Evaluation, Climate Stress Testing & Deployment
 **Project:** AI-Powered Corn and Soybean Yield Prediction System  
 **Scope:** Head-to-Head Cross-Crop Comparison, Simulated Climate Shocks, Prediction Uncertainty (95% Intervals), Soil Health Scoring & Advisory Validation
 

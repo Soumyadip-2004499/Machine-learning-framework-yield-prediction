@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Setup paths
-PROJ_DIR = r"C:\Users\chatt\.gemini\antigravity\scratch\krishiyield"
+PROJ_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RAW_DIR = os.path.join(PROJ_DIR, "data", "raw")
 PROC_DIR = os.path.join(PROJ_DIR, "data", "processed")
 FIG_DIR = os.path.join(PROJ_DIR, "reports", "figures")

@@ -1,5 +1,5 @@
 {
-  "project": "KrishiYield: AI-Powered Corn and Soybean Yield Prediction System",
+  "project": "CropSense AI: AI-Powered Corn and Soybean Yield Prediction System",
   "sources": {
     "yield_and_management": "USDA National Agricultural Statistics Service (NASS)",
     "weather": "Daymet Version 3: Daily Surface Weather Data on a 1-km Grid for North America (ORNL DAAC)",

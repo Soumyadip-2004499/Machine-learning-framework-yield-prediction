@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import numpy as np
 
-proj_dir = r"C:\Users\chatt\.gemini\antigravity\scratch\krishiyield"
+proj_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 data_dict_dir = os.path.join(proj_dir, "reports", "data_dictionary")
 os.makedirs(data_dict_dir, exist_ok=True)
 
@@ -50,7 +50,7 @@ surface_soil = {
 # Soybean has P1 to P14 (weeks ~16 to 29 of year, late April to mid July)
 
 data_dict = {
-    "project": "KrishiYield: AI-Powered Corn and Soybean Yield Prediction System",
+    "project": "CropSense AI: AI-Powered Corn and Soybean Yield Prediction System",
     "sources": {
         "yield_and_management": "USDA National Agricultural Statistics Service (NASS)",
         "weather": "Daymet Version 3: Daily Surface Weather Data on a 1-km Grid for North America (ORNL DAAC)",

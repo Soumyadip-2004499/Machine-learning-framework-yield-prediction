@@ -34,7 +34,7 @@ from sklearn.svm import SVR
 import xgboost as xgb
 import lightgbm as lgb
 
-PROJ_DIR = r"C:\Users\chatt\.gemini\antigravity\scratch\krishiyield"
+PROJ_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROC_DIR = os.path.join(PROJ_DIR, "data", "processed")
 MODEL_DIR = os.path.join(PROJ_DIR, "backend", "models")
 REPORT_DIR = os.path.join(PROJ_DIR, "reports", "model_comparison")
