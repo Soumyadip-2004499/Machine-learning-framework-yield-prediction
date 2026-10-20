@@ -509,6 +509,55 @@ function updateRangeLabels() {
   triggerLiveRecalcIfActive();
 }
 
+const CLOUD_API = 'https://cropsense-ai-api.onrender.com';
+
+async function fetchPredictionFromBackend(payload) {
+  // 1. Try relative endpoint (works on Render direct, or on Vercel with rewrites)
+  try {
+    const res = await fetch('/api/predict/farmer-simple', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    // Relative fetch failed
+  }
+
+  // 2. Try direct Cloud Render API
+  try {
+    const res = await fetch(`${CLOUD_API}/api/predict/farmer-simple`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    // Cloud Render fetch failed
+  }
+
+  // 3. Try localhost (for local development)
+  try {
+    const res = await fetch('http://127.0.0.1:8000/api/predict/farmer-simple', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    // Localhost failed
+  }
+
+  // Fallback to domain-calibrated scientific simulation if offline
+  return simulatePrediction(payload);
+}
+
 let liveRecalcTimer = null;
 function triggerLiveRecalcIfActive() {
   const content = document.getElementById('resultsContent');
@@ -530,18 +579,8 @@ function triggerLiveRecalcIfActive() {
       };
 
       try {
-        const res = await fetch('/api/predict/farmer-simple', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (res.ok) {
-          const data = await res.json();
-          renderPrediction(data);
-        } else {
-          const sim = simulatePrediction(payload);
-          renderPrediction(sim);
-        }
+        const data = await fetchPredictionFromBackend(payload);
+        renderPrediction(data);
       } catch (e) {
         const sim = simulatePrediction(payload);
         renderPrediction(sim);
@@ -697,37 +736,12 @@ async function handlePredictSubmit(e) {
   };
 
   try {
-    const res = await fetch('/api/predict/farmer-simple', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      setTimeout(() => {
-        clearInterval(stageInterval);
-        loadingCard.classList.add('hidden');
-        renderPrediction(data);
-      }, 550);
-    } else {
-      // Local fallback check
-      const altRes = await fetch('http://127.0.0.1:8000/api/predict/farmer-simple', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (altRes.ok) {
-        const data = await altRes.json();
-        setTimeout(() => {
-          clearInterval(stageInterval);
-          loadingCard.classList.add('hidden');
-          renderPrediction(data);
-        }, 550);
-      } else {
-        throw new Error("Local backend offline; using scientific simulation fallback");
-      }
-    }
+    const data = await fetchPredictionFromBackend(payload);
+    setTimeout(() => {
+      clearInterval(stageInterval);
+      loadingCard.classList.add('hidden');
+      renderPrediction(data);
+    }, 550);
   } catch (err) {
     console.warn("Using domain-calibrated scientific simulation:", err.message);
     const simData = simulatePrediction(payload);

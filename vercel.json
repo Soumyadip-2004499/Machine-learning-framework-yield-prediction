@@ -1,0 +1,9 @@
+{
+  "outputDirectory": "frontend/public",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://cropsense-ai-api.onrender.com/api/:path*"
+    }
+  ]
+}
