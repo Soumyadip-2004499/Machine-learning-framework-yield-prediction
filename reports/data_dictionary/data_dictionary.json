@@ -1,0 +1,2640 @@
+{
+  "project": "KrishiYield: AI-Powered Corn and Soybean Yield Prediction System",
+  "sources": {
+    "yield_and_management": "USDA National Agricultural Statistics Service (NASS)",
+    "weather": "Daymet Version 3: Daily Surface Weather Data on a 1-km Grid for North America (ORNL DAAC)",
+    "soil": "Gridded Soil Survey Geographic Database (gSSURGO) - USDA Natural Resources Conservation Service (NRCS)"
+  },
+  "geography": "105 Corn-and-Soybean Belt counties across 13 US agricultural states (IL, IA, IN, OH, MN, MO, NE, SD, ND, KS, WI, MI, KY)",
+  "temporal_range": "1980 to 2018 (39 years)",
+  "target_variable": {
+    "name": "Yield",
+    "units": "bushels per acre (bu/acre)",
+    "conversion_factors": {
+      "corn_1_bu_acre_to_kg_ha": 62.77,
+      "corn_1_bu_acre_to_t_ha": 0.06277,
+      "corn_1_bu_acre_to_quintal_acre": 0.254,
+      "soybean_1_bu_acre_to_kg_ha": 67.25,
+      "soybean_1_bu_acre_to_t_ha": 0.06725,
+      "soybean_1_bu_acre_to_quintal_acre": 0.2722
+    }
+  },
+  "columns": {
+    "Loc_Id": {
+      "category": "Metadata",
+      "name": "Location Identifier",
+      "unit": "Categorical ID (0-104)",
+      "description": "Anonymized county FIPS index representing agricultural county."
+    },
+    "Year": {
+      "category": "Metadata",
+      "name": "Harvest Year",
+      "unit": "Year (1980-2018)",
+      "description": "Crop production year."
+    },
+    "Yield": {
+      "category": "Target",
+      "name": "Crop Yield",
+      "unit": "bushels per acre (bu/acre)",
+      "description": "Actual harvested crop yield per harvested acre reported by USDA NASS."
+    },
+    "W11": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 1",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 1 of the year."
+    },
+    "W12": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 2",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 2 of the year."
+    },
+    "W13": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 3",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 3 of the year."
+    },
+    "W14": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 4",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 4 of the year."
+    },
+    "W15": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 5",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 5 of the year."
+    },
+    "W16": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 6",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 6 of the year."
+    },
+    "W17": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 7",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 7 of the year."
+    },
+    "W18": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 8",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 8 of the year."
+    },
+    "W19": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 9",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 9 of the year."
+    },
+    "W110": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 10",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 10 of the year."
+    },
+    "W111": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 11",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 11 of the year."
+    },
+    "W112": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 12",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 12 of the year."
+    },
+    "W113": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 13",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 13 of the year."
+    },
+    "W114": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 14",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 14 of the year."
+    },
+    "W115": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 15",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 15 of the year."
+    },
+    "W116": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 16",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 16 of the year."
+    },
+    "W117": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 17",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 17 of the year."
+    },
+    "W118": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 18",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 18 of the year."
+    },
+    "W119": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 19",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 19 of the year."
+    },
+    "W120": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 20",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 20 of the year."
+    },
+    "W121": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 21",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 21 of the year."
+    },
+    "W122": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 22",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 22 of the year."
+    },
+    "W123": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 23",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 23 of the year."
+    },
+    "W124": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 24",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 24 of the year."
+    },
+    "W125": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 25",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 25 of the year."
+    },
+    "W126": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 26",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 26 of the year."
+    },
+    "W127": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 27",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 27 of the year."
+    },
+    "W128": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 28",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 28 of the year."
+    },
+    "W129": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 29",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 29 of the year."
+    },
+    "W130": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 30",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 30 of the year."
+    },
+    "W131": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 31",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 31 of the year."
+    },
+    "W132": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 32",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 32 of the year."
+    },
+    "W133": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 33",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 33 of the year."
+    },
+    "W134": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 34",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 34 of the year."
+    },
+    "W135": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 35",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 35 of the year."
+    },
+    "W136": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 36",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 36 of the year."
+    },
+    "W137": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 37",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 37 of the year."
+    },
+    "W138": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 38",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 38 of the year."
+    },
+    "W139": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 39",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 39 of the year."
+    },
+    "W140": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 40",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 40 of the year."
+    },
+    "W141": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 41",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 41 of the year."
+    },
+    "W142": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 42",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 42 of the year."
+    },
+    "W143": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 43",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 43 of the year."
+    },
+    "W144": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 44",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 44 of the year."
+    },
+    "W145": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 45",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 45 of the year."
+    },
+    "W146": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 46",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 46 of the year."
+    },
+    "W147": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 47",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 47 of the year."
+    },
+    "W148": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 48",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 48 of the year."
+    },
+    "W149": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 49",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 49 of the year."
+    },
+    "W150": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 50",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 50 of the year."
+    },
+    "W151": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 51",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 51 of the year."
+    },
+    "W152": {
+      "category": "Weather (Daymet)",
+      "name": "Precipitation - Week 52",
+      "unit": "mm/week",
+      "description": "Total weekly precipitation (rain and liquid equivalent) during week 52 of the year."
+    },
+    "W21": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 1",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 1 of the year."
+    },
+    "W22": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 2",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 2 of the year."
+    },
+    "W23": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 3",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 3 of the year."
+    },
+    "W24": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 4",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 4 of the year."
+    },
+    "W25": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 5",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 5 of the year."
+    },
+    "W26": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 6",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 6 of the year."
+    },
+    "W27": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 7",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 7 of the year."
+    },
+    "W28": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 8",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 8 of the year."
+    },
+    "W29": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 9",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 9 of the year."
+    },
+    "W210": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 10",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 10 of the year."
+    },
+    "W211": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 11",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 11 of the year."
+    },
+    "W212": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 12",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 12 of the year."
+    },
+    "W213": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 13",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 13 of the year."
+    },
+    "W214": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 14",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 14 of the year."
+    },
+    "W215": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 15",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 15 of the year."
+    },
+    "W216": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 16",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 16 of the year."
+    },
+    "W217": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 17",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 17 of the year."
+    },
+    "W218": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 18",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 18 of the year."
+    },
+    "W219": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 19",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 19 of the year."
+    },
+    "W220": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 20",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 20 of the year."
+    },
+    "W221": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 21",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 21 of the year."
+    },
+    "W222": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 22",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 22 of the year."
+    },
+    "W223": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 23",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 23 of the year."
+    },
+    "W224": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 24",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 24 of the year."
+    },
+    "W225": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 25",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 25 of the year."
+    },
+    "W226": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 26",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 26 of the year."
+    },
+    "W227": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 27",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 27 of the year."
+    },
+    "W228": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 28",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 28 of the year."
+    },
+    "W229": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 29",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 29 of the year."
+    },
+    "W230": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 30",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 30 of the year."
+    },
+    "W231": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 31",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 31 of the year."
+    },
+    "W232": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 32",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 32 of the year."
+    },
+    "W233": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 33",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 33 of the year."
+    },
+    "W234": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 34",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 34 of the year."
+    },
+    "W235": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 35",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 35 of the year."
+    },
+    "W236": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 36",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 36 of the year."
+    },
+    "W237": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 37",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 37 of the year."
+    },
+    "W238": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 38",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 38 of the year."
+    },
+    "W239": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 39",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 39 of the year."
+    },
+    "W240": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 40",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 40 of the year."
+    },
+    "W241": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 41",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 41 of the year."
+    },
+    "W242": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 42",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 42 of the year."
+    },
+    "W243": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 43",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 43 of the year."
+    },
+    "W244": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 44",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 44 of the year."
+    },
+    "W245": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 45",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 45 of the year."
+    },
+    "W246": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 46",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 46 of the year."
+    },
+    "W247": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 47",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 47 of the year."
+    },
+    "W248": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 48",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 48 of the year."
+    },
+    "W249": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 49",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 49 of the year."
+    },
+    "W250": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 50",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 50 of the year."
+    },
+    "W251": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 51",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 51 of the year."
+    },
+    "W252": {
+      "category": "Weather (Daymet)",
+      "name": "Solar Radiation - Week 52",
+      "unit": "W/m\u00b2",
+      "description": "Weekly mean incident shortwave solar radiation during week 52 of the year."
+    },
+    "W31": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 1",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 1 of the year."
+    },
+    "W32": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 2",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 2 of the year."
+    },
+    "W33": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 3",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 3 of the year."
+    },
+    "W34": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 4",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 4 of the year."
+    },
+    "W35": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 5",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 5 of the year."
+    },
+    "W36": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 6",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 6 of the year."
+    },
+    "W37": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 7",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 7 of the year."
+    },
+    "W38": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 8",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 8 of the year."
+    },
+    "W39": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 9",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 9 of the year."
+    },
+    "W310": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 10",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 10 of the year."
+    },
+    "W311": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 11",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 11 of the year."
+    },
+    "W312": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 12",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 12 of the year."
+    },
+    "W313": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 13",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 13 of the year."
+    },
+    "W314": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 14",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 14 of the year."
+    },
+    "W315": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 15",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 15 of the year."
+    },
+    "W316": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 16",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 16 of the year."
+    },
+    "W317": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 17",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 17 of the year."
+    },
+    "W318": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 18",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 18 of the year."
+    },
+    "W319": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 19",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 19 of the year."
+    },
+    "W320": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 20",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 20 of the year."
+    },
+    "W321": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 21",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 21 of the year."
+    },
+    "W322": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 22",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 22 of the year."
+    },
+    "W323": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 23",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 23 of the year."
+    },
+    "W324": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 24",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 24 of the year."
+    },
+    "W325": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 25",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 25 of the year."
+    },
+    "W326": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 26",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 26 of the year."
+    },
+    "W327": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 27",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 27 of the year."
+    },
+    "W328": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 28",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 28 of the year."
+    },
+    "W329": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 29",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 29 of the year."
+    },
+    "W330": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 30",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 30 of the year."
+    },
+    "W331": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 31",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 31 of the year."
+    },
+    "W332": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 32",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 32 of the year."
+    },
+    "W333": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 33",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 33 of the year."
+    },
+    "W334": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 34",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 34 of the year."
+    },
+    "W335": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 35",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 35 of the year."
+    },
+    "W336": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 36",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 36 of the year."
+    },
+    "W337": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 37",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 37 of the year."
+    },
+    "W338": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 38",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 38 of the year."
+    },
+    "W339": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 39",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 39 of the year."
+    },
+    "W340": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 40",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 40 of the year."
+    },
+    "W341": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 41",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 41 of the year."
+    },
+    "W342": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 42",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 42 of the year."
+    },
+    "W343": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 43",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 43 of the year."
+    },
+    "W344": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 44",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 44 of the year."
+    },
+    "W345": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 45",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 45 of the year."
+    },
+    "W346": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 46",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 46 of the year."
+    },
+    "W347": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 47",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 47 of the year."
+    },
+    "W348": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 48",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 48 of the year."
+    },
+    "W349": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 49",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 49 of the year."
+    },
+    "W350": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 50",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 50 of the year."
+    },
+    "W351": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 51",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 51 of the year."
+    },
+    "W352": {
+      "category": "Weather (Daymet)",
+      "name": "Snow Water Equivalent - Week 52",
+      "unit": "mm",
+      "description": "Snowpack water equivalent during week 52 of the year."
+    },
+    "W41": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 1",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 1 of the year."
+    },
+    "W42": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 2",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 2 of the year."
+    },
+    "W43": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 3",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 3 of the year."
+    },
+    "W44": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 4",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 4 of the year."
+    },
+    "W45": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 5",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 5 of the year."
+    },
+    "W46": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 6",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 6 of the year."
+    },
+    "W47": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 7",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 7 of the year."
+    },
+    "W48": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 8",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 8 of the year."
+    },
+    "W49": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 9",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 9 of the year."
+    },
+    "W410": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 10",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 10 of the year."
+    },
+    "W411": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 11",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 11 of the year."
+    },
+    "W412": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 12",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 12 of the year."
+    },
+    "W413": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 13",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 13 of the year."
+    },
+    "W414": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 14",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 14 of the year."
+    },
+    "W415": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 15",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 15 of the year."
+    },
+    "W416": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 16",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 16 of the year."
+    },
+    "W417": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 17",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 17 of the year."
+    },
+    "W418": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 18",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 18 of the year."
+    },
+    "W419": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 19",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 19 of the year."
+    },
+    "W420": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 20",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 20 of the year."
+    },
+    "W421": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 21",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 21 of the year."
+    },
+    "W422": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 22",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 22 of the year."
+    },
+    "W423": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 23",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 23 of the year."
+    },
+    "W424": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 24",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 24 of the year."
+    },
+    "W425": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 25",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 25 of the year."
+    },
+    "W426": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 26",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 26 of the year."
+    },
+    "W427": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 27",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 27 of the year."
+    },
+    "W428": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 28",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 28 of the year."
+    },
+    "W429": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 29",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 29 of the year."
+    },
+    "W430": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 30",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 30 of the year."
+    },
+    "W431": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 31",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 31 of the year."
+    },
+    "W432": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 32",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 32 of the year."
+    },
+    "W433": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 33",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 33 of the year."
+    },
+    "W434": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 34",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 34 of the year."
+    },
+    "W435": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 35",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 35 of the year."
+    },
+    "W436": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 36",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 36 of the year."
+    },
+    "W437": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 37",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 37 of the year."
+    },
+    "W438": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 38",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 38 of the year."
+    },
+    "W439": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 39",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 39 of the year."
+    },
+    "W440": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 40",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 40 of the year."
+    },
+    "W441": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 41",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 41 of the year."
+    },
+    "W442": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 42",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 42 of the year."
+    },
+    "W443": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 43",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 43 of the year."
+    },
+    "W444": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 44",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 44 of the year."
+    },
+    "W445": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 45",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 45 of the year."
+    },
+    "W446": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 46",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 46 of the year."
+    },
+    "W447": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 47",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 47 of the year."
+    },
+    "W448": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 48",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 48 of the year."
+    },
+    "W449": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 49",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 49 of the year."
+    },
+    "W450": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 50",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 50 of the year."
+    },
+    "W451": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 51",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 51 of the year."
+    },
+    "W452": {
+      "category": "Weather (Daymet)",
+      "name": "Maximum Temperature - Week 52",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily maximum 2m air temperature during week 52 of the year."
+    },
+    "W51": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 1",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 1 of the year."
+    },
+    "W52": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 2",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 2 of the year."
+    },
+    "W53": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 3",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 3 of the year."
+    },
+    "W54": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 4",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 4 of the year."
+    },
+    "W55": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 5",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 5 of the year."
+    },
+    "W56": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 6",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 6 of the year."
+    },
+    "W57": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 7",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 7 of the year."
+    },
+    "W58": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 8",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 8 of the year."
+    },
+    "W59": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 9",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 9 of the year."
+    },
+    "W510": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 10",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 10 of the year."
+    },
+    "W511": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 11",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 11 of the year."
+    },
+    "W512": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 12",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 12 of the year."
+    },
+    "W513": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 13",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 13 of the year."
+    },
+    "W514": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 14",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 14 of the year."
+    },
+    "W515": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 15",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 15 of the year."
+    },
+    "W516": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 16",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 16 of the year."
+    },
+    "W517": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 17",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 17 of the year."
+    },
+    "W518": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 18",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 18 of the year."
+    },
+    "W519": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 19",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 19 of the year."
+    },
+    "W520": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 20",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 20 of the year."
+    },
+    "W521": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 21",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 21 of the year."
+    },
+    "W522": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 22",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 22 of the year."
+    },
+    "W523": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 23",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 23 of the year."
+    },
+    "W524": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 24",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 24 of the year."
+    },
+    "W525": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 25",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 25 of the year."
+    },
+    "W526": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 26",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 26 of the year."
+    },
+    "W527": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 27",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 27 of the year."
+    },
+    "W528": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 28",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 28 of the year."
+    },
+    "W529": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 29",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 29 of the year."
+    },
+    "W530": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 30",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 30 of the year."
+    },
+    "W531": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 31",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 31 of the year."
+    },
+    "W532": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 32",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 32 of the year."
+    },
+    "W533": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 33",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 33 of the year."
+    },
+    "W534": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 34",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 34 of the year."
+    },
+    "W535": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 35",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 35 of the year."
+    },
+    "W536": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 36",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 36 of the year."
+    },
+    "W537": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 37",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 37 of the year."
+    },
+    "W538": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 38",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 38 of the year."
+    },
+    "W539": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 39",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 39 of the year."
+    },
+    "W540": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 40",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 40 of the year."
+    },
+    "W541": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 41",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 41 of the year."
+    },
+    "W542": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 42",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 42 of the year."
+    },
+    "W543": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 43",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 43 of the year."
+    },
+    "W544": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 44",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 44 of the year."
+    },
+    "W545": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 45",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 45 of the year."
+    },
+    "W546": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 46",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 46 of the year."
+    },
+    "W547": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 47",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 47 of the year."
+    },
+    "W548": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 48",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 48 of the year."
+    },
+    "W549": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 49",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 49 of the year."
+    },
+    "W550": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 50",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 50 of the year."
+    },
+    "W551": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 51",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 51 of the year."
+    },
+    "W552": {
+      "category": "Weather (Daymet)",
+      "name": "Minimum Temperature - Week 52",
+      "unit": "\u00b0C",
+      "description": "Weekly mean daily minimum 2m air temperature during week 52 of the year."
+    },
+    "W61": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 1",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 1 of the year."
+    },
+    "W62": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 2",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 2 of the year."
+    },
+    "W63": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 3",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 3 of the year."
+    },
+    "W64": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 4",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 4 of the year."
+    },
+    "W65": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 5",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 5 of the year."
+    },
+    "W66": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 6",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 6 of the year."
+    },
+    "W67": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 7",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 7 of the year."
+    },
+    "W68": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 8",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 8 of the year."
+    },
+    "W69": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 9",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 9 of the year."
+    },
+    "W610": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 10",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 10 of the year."
+    },
+    "W611": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 11",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 11 of the year."
+    },
+    "W612": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 12",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 12 of the year."
+    },
+    "W613": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 13",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 13 of the year."
+    },
+    "W614": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 14",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 14 of the year."
+    },
+    "W615": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 15",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 15 of the year."
+    },
+    "W616": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 16",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 16 of the year."
+    },
+    "W617": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 17",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 17 of the year."
+    },
+    "W618": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 18",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 18 of the year."
+    },
+    "W619": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 19",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 19 of the year."
+    },
+    "W620": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 20",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 20 of the year."
+    },
+    "W621": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 21",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 21 of the year."
+    },
+    "W622": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 22",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 22 of the year."
+    },
+    "W623": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 23",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 23 of the year."
+    },
+    "W624": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 24",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 24 of the year."
+    },
+    "W625": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 25",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 25 of the year."
+    },
+    "W626": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 26",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 26 of the year."
+    },
+    "W627": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 27",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 27 of the year."
+    },
+    "W628": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 28",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 28 of the year."
+    },
+    "W629": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 29",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 29 of the year."
+    },
+    "W630": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 30",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 30 of the year."
+    },
+    "W631": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 31",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 31 of the year."
+    },
+    "W632": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 32",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 32 of the year."
+    },
+    "W633": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 33",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 33 of the year."
+    },
+    "W634": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 34",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 34 of the year."
+    },
+    "W635": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 35",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 35 of the year."
+    },
+    "W636": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 36",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 36 of the year."
+    },
+    "W637": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 37",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 37 of the year."
+    },
+    "W638": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 38",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 38 of the year."
+    },
+    "W639": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 39",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 39 of the year."
+    },
+    "W640": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 40",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 40 of the year."
+    },
+    "W641": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 41",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 41 of the year."
+    },
+    "W642": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 42",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 42 of the year."
+    },
+    "W643": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 43",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 43 of the year."
+    },
+    "W644": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 44",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 44 of the year."
+    },
+    "W645": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 45",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 45 of the year."
+    },
+    "W646": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 46",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 46 of the year."
+    },
+    "W647": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 47",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 47 of the year."
+    },
+    "W648": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 48",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 48 of the year."
+    },
+    "W649": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 49",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 49 of the year."
+    },
+    "W650": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 50",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 50 of the year."
+    },
+    "W651": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 51",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 51 of the year."
+    },
+    "W652": {
+      "category": "Weather (Daymet)",
+      "name": "Vapour Pressure - Week 52",
+      "unit": "Pa",
+      "description": "Weekly mean atmospheric water vapour pressure during week 52 of the year."
+    },
+    "*": {
+      "category": "Weather (Daymet) - Anomalous Raw Column",
+      "name": "Snow Water Equivalent - Week 4 (misnamed as '*')",
+      "unit": "mm",
+      "description": "Raw corn CSV typo where column 'W34' was labeled as '*'. Verified by column ordering W32, W33, *, W35."
+    },
+    "S11": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (0-5 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 0-5 cm."
+    },
+    "S12": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (5-10 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 5-10 cm."
+    },
+    "S13": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (10-20 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 10-20 cm."
+    },
+    "S14": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (20-30 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 20-30 cm."
+    },
+    "S15": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (30-40 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 30-40 cm."
+    },
+    "S16": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (40-60 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 40-60 cm."
+    },
+    "S17": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (60-80 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 60-80 cm."
+    },
+    "S18": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (80-100 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 80-100 cm."
+    },
+    "S19": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (100-150 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 100-150 cm."
+    },
+    "S110": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Wet Soil Bulk Density (150-200 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Total mass of moist soil per unit volume at depth layer 150-200 cm."
+    },
+    "S21": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (0-5 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 0-5 cm."
+    },
+    "S22": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (5-10 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 5-10 cm."
+    },
+    "S23": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (10-20 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 10-20 cm."
+    },
+    "S24": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (20-30 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 20-30 cm."
+    },
+    "S25": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (30-40 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 30-40 cm."
+    },
+    "S26": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (40-60 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 40-60 cm."
+    },
+    "S27": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (60-80 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 60-80 cm."
+    },
+    "S28": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (80-100 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 80-100 cm."
+    },
+    "S29": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (100-150 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 100-150 cm."
+    },
+    "S210": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Dry Bulk Density (150-200 cm)",
+      "unit": "g/cm\u00b3",
+      "description": "Oven-dry mass of mineral soil per unit volume; reflects soil compaction and porosity at depth layer 150-200 cm."
+    },
+    "S31": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (0-5 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 0-5 cm."
+    },
+    "S32": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (5-10 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 5-10 cm."
+    },
+    "S33": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (10-20 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 10-20 cm."
+    },
+    "S34": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (20-30 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 20-30 cm."
+    },
+    "S35": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (30-40 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 30-40 cm."
+    },
+    "S36": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (40-60 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 40-60 cm."
+    },
+    "S37": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (60-80 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 60-80 cm."
+    },
+    "S38": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (80-100 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 80-100 cm."
+    },
+    "S39": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (100-150 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 100-150 cm."
+    },
+    "S310": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Clay Content (150-200 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles smaller than 0.002 mm; controls water retention and cation exchange at depth layer 150-200 cm."
+    },
+    "S41": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (0-5 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 0-5 cm."
+    },
+    "S42": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (5-10 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 5-10 cm."
+    },
+    "S43": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (10-20 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 10-20 cm."
+    },
+    "S44": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (20-30 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 20-30 cm."
+    },
+    "S45": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (30-40 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 30-40 cm."
+    },
+    "S46": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (40-60 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 40-60 cm."
+    },
+    "S47": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (60-80 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 60-80 cm."
+    },
+    "S48": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (80-100 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 80-100 cm."
+    },
+    "S49": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (100-150 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 100-150 cm."
+    },
+    "S410": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Upper Limit of Plant Available Water Content (Field Capacity) (150-200 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water retention after free drainage ceases at depth layer 150-200 cm."
+    },
+    "S51": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (0-5 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 0-5 cm."
+    },
+    "S52": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (5-10 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 5-10 cm."
+    },
+    "S53": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (10-20 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 10-20 cm."
+    },
+    "S54": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (20-30 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 20-30 cm."
+    },
+    "S55": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (30-40 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 30-40 cm."
+    },
+    "S56": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (40-60 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 40-60 cm."
+    },
+    "S57": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (60-80 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 60-80 cm."
+    },
+    "S58": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (80-100 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 80-100 cm."
+    },
+    "S59": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (100-150 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 100-150 cm."
+    },
+    "S510": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Lower Limit of Plant Available Water Content (Permanent Wilting Point) (150-200 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Soil water content below which plants can no longer extract water at depth layer 150-200 cm."
+    },
+    "S61": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (0-5 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 0-5 cm."
+    },
+    "S62": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (5-10 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 5-10 cm."
+    },
+    "S63": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (10-20 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 10-20 cm."
+    },
+    "S64": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (20-30 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 20-30 cm."
+    },
+    "S65": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (30-40 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 30-40 cm."
+    },
+    "S66": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (40-60 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 40-60 cm."
+    },
+    "S67": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (60-80 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 60-80 cm."
+    },
+    "S68": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (80-100 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 80-100 cm."
+    },
+    "S69": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (100-150 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 100-150 cm."
+    },
+    "S610": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Hydraulic Conductivity (Ksat) (150-200 cm)",
+      "unit": "\u03bcm/s",
+      "description": "Rate of saturated water movement through the soil profile; key for drainage at depth layer 150-200 cm."
+    },
+    "S71": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (0-5 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 0-5 cm."
+    },
+    "S72": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (5-10 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 5-10 cm."
+    },
+    "S73": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (10-20 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 10-20 cm."
+    },
+    "S74": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (20-30 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 20-30 cm."
+    },
+    "S75": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (30-40 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 30-40 cm."
+    },
+    "S76": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (40-60 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 40-60 cm."
+    },
+    "S77": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (60-80 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 60-80 cm."
+    },
+    "S78": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (80-100 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 80-100 cm."
+    },
+    "S79": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (100-150 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 100-150 cm."
+    },
+    "S710": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Organic Matter Content (150-200 cm)",
+      "unit": "%",
+      "description": "Decomposed plant/animal residue; vital for soil fertility, structure, and microbial activity at depth layer 150-200 cm."
+    },
+    "S81": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (0-5 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 0-5 cm."
+    },
+    "S82": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (5-10 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 5-10 cm."
+    },
+    "S83": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (10-20 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 10-20 cm."
+    },
+    "S84": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (20-30 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 20-30 cm."
+    },
+    "S85": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (30-40 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 30-40 cm."
+    },
+    "S86": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (40-60 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 40-60 cm."
+    },
+    "S87": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (60-80 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 60-80 cm."
+    },
+    "S88": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (80-100 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 80-100 cm."
+    },
+    "S89": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (100-150 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 100-150 cm."
+    },
+    "S810": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Soil pH (150-200 cm)",
+      "unit": "pH scale (0-14)",
+      "description": "Negative log of hydrogen ion activity in water; determines nutrient availability (optimal 6.0-7.0) at depth layer 150-200 cm."
+    },
+    "S91": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (0-5 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 0-5 cm."
+    },
+    "S92": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (5-10 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 5-10 cm."
+    },
+    "S93": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (10-20 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 10-20 cm."
+    },
+    "S94": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (20-30 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 20-30 cm."
+    },
+    "S95": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (30-40 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 30-40 cm."
+    },
+    "S96": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (40-60 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 40-60 cm."
+    },
+    "S97": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (60-80 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 60-80 cm."
+    },
+    "S98": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (80-100 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 80-100 cm."
+    },
+    "S99": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (100-150 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 100-150 cm."
+    },
+    "S910": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Sand Content (150-200 cm)",
+      "unit": "%",
+      "description": "Percentage of mineral particles between 0.05 and 2.0 mm; determines aeration and infiltration at depth layer 150-200 cm."
+    },
+    "S101": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (0-5 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 0-5 cm."
+    },
+    "S102": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (5-10 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 5-10 cm."
+    },
+    "S103": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (10-20 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 10-20 cm."
+    },
+    "S104": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (20-30 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 20-30 cm."
+    },
+    "S105": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (30-40 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 30-40 cm."
+    },
+    "S106": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (40-60 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 40-60 cm."
+    },
+    "S107": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (60-80 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 60-80 cm."
+    },
+    "S108": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (80-100 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 80-100 cm."
+    },
+    "S109": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (100-150 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 100-150 cm."
+    },
+    "S1010": {
+      "category": "Soil Profile (gSSURGO)",
+      "name": "Saturated Volumetric Water Content (Porosity) (150-200 cm)",
+      "unit": "cm/cm (vol fraction)",
+      "description": "Total pore space filled with water at saturation at depth layer 150-200 cm."
+    },
+    "S_surface1": {
+      "category": "Surface Soil (gSSURGO)",
+      "name": "Field Slope",
+      "unit": "%",
+      "description": "Average land surface inclination; affects runoff and erosion risk"
+    },
+    "S_surface2": {
+      "category": "Surface Soil (gSSURGO)",
+      "name": "Soil Productivity Index",
+      "unit": "Index (0-1)",
+      "description": "Inherent soil quality and yield potential based on root zone properties"
+    },
+    "S_surface3": {
+      "category": "Surface Soil (gSSURGO)",
+      "name": "Average Productivity Index",
+      "unit": "Index (0-1)",
+      "description": "County/area-weighted mean productivity index"
+    },
+    "S_surface4": {
+      "category": "Surface Soil (gSSURGO)",
+      "name": "Rooting Depth",
+      "unit": "cm",
+      "description": "Maximum effective depth that plant roots can penetrate without physical/chemical restriction"
+    },
+    "P1": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 1",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 1."
+    },
+    "P2": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 2",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 2."
+    },
+    "P3": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 3",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 3."
+    },
+    "P4": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 4",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 4."
+    },
+    "P5": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 5",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 5."
+    },
+    "P6": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 6",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 6."
+    },
+    "P7": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 7",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 7."
+    },
+    "P8": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 8",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 8."
+    },
+    "P9": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 9",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 9."
+    },
+    "P10": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 10",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 10."
+    },
+    "P11": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 11",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 11."
+    },
+    "P12": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 12",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 12."
+    },
+    "P13": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 13",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 13."
+    },
+    "P14": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 14",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 14."
+    },
+    "P15": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 15",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 15."
+    },
+    "P16": {
+      "category": "Crop Management (USDA NASS)",
+      "name": "Planting Progress - Week 16",
+      "unit": "Percentage (%)",
+      "description": "Cumulative percentage of crop planted by planting window week 16."
+    }
+  }
+}

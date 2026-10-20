@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropSense AI — Precision Crop Yield Prediction System</title>
+  <meta name="description" content="Scientific, climate-aware crop yield forecasting and soil health assessment system for corn and soybean crops.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            field: {
+              50: '#f7f6f1',
+              100: '#eeede5',
+              900: '#1b261f'
+            },
+            leaf: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            corn: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen flex flex-col bg-[#f7f6f1] dark:bg-[#0a110d] text-[#1b261f] dark:text-[#f0fdf4] transition-colors duration-500">
+
+  <!-- Botanical Vine Scroll Progress Bar -->
+  <div id="agriScrollProgress"><div id="agriScrollPip"></div></div>
+
+  <!-- Ambient Agricultural Breeze Canvas -->
+  <canvas id="agriAmbientCanvas"></canvas>
+
+  <!-- Animated Theme Reveal Ripple Overlay -->
+  <div id="themeOverlay" class="theme-transition-overlay"></div>
+
+  <!-- ==================== HEADER & NAVIGATION BAR ==================== -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-[#111a14]/90 border-b border-[#e0ded4] dark:border-[#213529] transition-all duration-300 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchTab('intro')">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#227048] to-[#164e32] dark:from-[#10b981] dark:to-[#059669] flex items-center justify-center text-white shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform duration-300">
+          <i data-lucide="sprout" class="w-6 h-6 animate-plant-sway text-emerald-100 dark:text-emerald-950"></i>
+        </div>
+        <div>
+          <span class="text-2xl font-black font-display tracking-tight text-[#164e32] dark:text-[#34d399]">Crop<span class="text-[#d97706] dark:text-[#fbbf24]">Sense</span> AI</span>
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[11px] text-stone-500 dark:text-stone-400 font-semibold tracking-wide uppercase">AI Agro-Intelligence</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs with Glider -->
+      <nav class="hidden md:flex items-center p-1.5 rounded-2xl bg-[#eeede5] dark:bg-[#1c2e23] border border-[#e0ded4] dark:border-[#2d4838] relative">
+        <div id="navGlider" class="nav-tab-glider"></div>
+        <button id="nav-intro" onclick="switchTab('intro')" class="nav-tab active px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 text-[#164e32] dark:text-[#34d399]">
+          <i data-lucide="home" class="w-3.5 h-3.5"></i>
+          <span>Introduction</span>
+        </button>
+        <button id="nav-predict" onclick="switchTab('predict')" class="nav-tab px-4 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2 text-stone-600 dark:text-stone-300 hover:text-emerald-700 dark:hover:text-emerald-400">
+          <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+          <span>Predict Yield</span>
+        </button>
+        <button id="nav-models" onclick="switchTab('models')" class="nav-tab px-4 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2 text-stone-600 dark:text-stone-300 hover:text-emerald-700 dark:hover:text-emerald-400">
+          <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
+          <span>Model Benchmark</span>
+        </button>
+        <button id="nav-guidance" onclick="switchTab('guidance')" class="nav-tab px-4 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2 text-stone-600 dark:text-stone-300 hover:text-emerald-700 dark:hover:text-emerald-400">
+          <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+          <span>Field Guidance</span>
+        </button>
+        <button id="nav-data" onclick="switchTab('data')" class="nav-tab px-4 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2 text-stone-600 dark:text-stone-300 hover:text-emerald-700 dark:hover:text-emerald-400">
+          <i data-lucide="database" class="w-3.5 h-3.5"></i>
+          <span>Data Explorer</span>
+        </button>
+      </nav>
+
+      <!-- Right Controls: Quick Crop Switch & Theme Toggle -->
+      <div class="flex items-center space-x-3">
+        <!-- Quick Crop Selector Pill -->
+        <div class="flex bg-[#eeede5] dark:bg-[#1c2e23] p-1 rounded-xl border border-[#e0ded4] dark:border-[#2d4838] text-xs font-bold">
+          <button id="quick-corn" onclick="selectCrop('corn')" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 bg-white dark:bg-[#111a14] text-amber-700 dark:text-amber-400 shadow-sm">
+            <span>🌽 Corn</span>
+          </button>
+          <button id="quick-soy" onclick="selectCrop('soybean')" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-stone-600 dark:text-stone-400 hover:text-emerald-600">
+            <span>🌱 Soybean</span>
+          </button>
+        </div>
+
+        <!-- Theme Toggle Button -->
+        <button id="themeToggleBtn" onclick="toggleThemeWithAnimation(event)" aria-label="Toggle theme" class="relative p-2.5 rounded-xl bg-[#eeede5] dark:bg-[#1c2e23] border border-[#e0ded4] dark:border-[#2d4838] text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-[#253d30] transition-all shadow-sm">
+          <i id="themeIconSun" data-lucide="sun" class="w-4 h-4 hidden dark:block text-amber-400 animate-spin-slow"></i>
+          <i id="themeIconMoon" data-lucide="moon" class="w-4 h-4 block dark:hidden text-emerald-800"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== MAIN APPLICATION CONTAINER ==================== -->
+  <main class="flex-grow relative z-10">
+
+    <!-- ==================== TAB 0: INTRODUCTION PAGE ==================== -->
+    <section id="tab-intro" class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto section-enter">
+      
+      <!-- HERO BANNER -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#164e32] via-[#227048] to-[#1b3d2b] dark:from-[#0d281a] dark:via-[#163825] dark:to-[#091f14] text-white p-8 sm:p-12 shadow-xl mb-12 border border-emerald-600/30">
+        <div class="absolute inset-0 opacity-15 agri-furrow-pattern"></div>
+        
+        <div class="relative z-10 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-800/80 border border-emerald-400/30 text-emerald-200 text-xs font-bold mb-4 backdrop-blur-md shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>AI-Powered Precision Agricultural Intelligence</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-black font-display tracking-tight text-white leading-tight mb-4">
+            Predict Crop Harvests With <span class="text-[#fbbf24] underline decoration-amber-400/40 decoration-wavy">Scientific Accuracy</span>
+          </h1>
+
+          <p class="text-emerald-100/90 text-sm sm:text-base leading-relaxed mb-8 font-normal">
+            Welcome to <strong>CropSense AI</strong>. Built for farmers, agriculturalists, and research planners, our system translates <strong>39 years of real-world US Corn & Soybean Belt meteorological data</strong> and <strong>deep subterranean soil physics</strong> into instant, reliable crop yield forecasts and actionable field guidance.
+          </p>
+
+          <!-- Dual Call to Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 mb-8">
+            <button onclick="switchTab('predict')" class="px-6 py-3.5 rounded-2xl agri-btn-primary font-black font-display text-sm flex items-center gap-2 cursor-pointer shadow-lg hover:shadow-emerald-700/30 transition-all">
+              <i data-lucide="sprout" class="w-5 h-5 animate-plant-sway"></i>
+              <span>Launch Yield Predictor</span>
+            </button>
+            <button onclick="switchTab('models')" class="px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm flex items-center gap-2 border border-white/20 backdrop-blur-sm transition-all">
+              <i data-lucide="bar-chart-3" class="w-4 h-4 text-amber-300"></i>
+              <span>View 17-Model Benchmark</span>
+            </button>
+          </div>
+
+          <!-- Agricultural Metrics Pill Strip -->
+          <div class="flex flex-wrap items-center gap-3 text-xs font-semibold">
+            <div class="flex items-center gap-2 bg-black/25 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-white/10">
+              <i data-lucide="history" class="w-4 h-4 text-amber-300"></i>
+              <span>39 Cropping Years (1980–2018)</span>
+            </div>
+            <div class="flex items-center gap-2 bg-black/25 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-white/10">
+              <i data-lucide="map-pin" class="w-4 h-4 text-emerald-300"></i>
+              <span>105 US Agricultural Counties</span>
+            </div>
+            <div class="flex items-center gap-2 bg-black/25 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-white/10">
+              <i data-lucide="cpu" class="w-4 h-4 text-amber-300"></i>
+              <span>Tuned XGBoost (0.937 Corn R² • 0.926 Soybean R²)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: CHOOSE YOUR CROP TO PREDICT -->
+      <div class="mb-14">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+          <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Target Crop Selection</span>
+          <h2 class="text-2xl sm:text-3xl font-black font-display text-stone-900 dark:text-white mt-1">
+            Choose Your Crop to Forecast
+          </h2>
+          <p class="text-stone-500 dark:text-stone-400 text-xs sm:text-sm mt-2">
+            Click on either crop card below to immediately begin yield forecasting with tailored agronomic parameters.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- CORN SHOWCASE CARD -->
+          <div class="agri-card p-8 border-2 border-amber-300/80 dark:border-amber-700/50 hover:border-amber-500 transition-all rounded-3xl relative overflow-hidden group shadow-md hover:shadow-xl">
+            <div class="flex items-start justify-between mb-6">
+              <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center text-4xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                  <span class="animate-plant-sway">🌽</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold font-display text-stone-900 dark:text-white flex items-center gap-2">
+                    <span>Corn (Maize)</span>
+                    <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-bold uppercase tracking-wide">Cereal Grain</span>
+                  </h3>
+                  <p class="text-stone-500 dark:text-stone-400 text-xs font-medium">Standard 56 lb / Bushel • Zea mays</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed mb-6">
+              Corn grain yield is heavily determined by temperature during the critical <strong>Weeks 27–31 silking window (July)</strong> and root-zone water capacity. Daytime temperatures exceeding 31°C induce pollen desiccation.
+            </p>
+
+            <div class="grid grid-cols-2 gap-3 mb-6 p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/50 text-xs">
+              <div>
+                <span class="text-stone-500 dark:text-stone-400 block text-[11px]">Historical Mean</span>
+                <span class="font-bold text-stone-900 dark:text-white text-sm">137.4 bu/acre</span>
+                <span class="text-[10px] text-stone-400 block">~8.6 metric tons/ha</span>
+              </div>
+              <div>
+                <span class="text-stone-500 dark:text-stone-400 block text-[11px]">Model Accuracy</span>
+                <span class="font-bold text-amber-700 dark:text-amber-400 text-sm">R² = 0.9374</span>
+                <span class="text-[10px] text-stone-400 block">RMSE = 9.39 bu/acre</span>
+              </div>
+            </div>
+
+            <button onclick="startPredictionForCrop('corn')" class="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md group-hover:shadow-amber-500/20">
+              <i data-lucide="calculator" class="w-4 h-4"></i>
+              <span>Predict Corn Yield 🌽</span>
+            </button>
+          </div>
+
+          <!-- SOYBEAN SHOWCASE CARD -->
+          <div class="agri-card p-8 border-2 border-emerald-300/80 dark:border-emerald-700/50 hover:border-emerald-500 transition-all rounded-3xl relative overflow-hidden group shadow-md hover:shadow-xl">
+            <div class="flex items-start justify-between mb-6">
+              <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-4xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                  <span class="animate-plant-sway">🌱</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold font-display text-stone-900 dark:text-white flex items-center gap-2">
+                    <span>Soybean</span>
+                    <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 font-bold uppercase tracking-wide">Oilseed Legume</span>
+                  </h3>
+                  <p class="text-stone-500 dark:text-stone-400 text-xs font-medium">Standard 60 lb / Bushel • Glycine max</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed mb-6">
+              Soybean yield is dictated by <strong>late-summer pod fill moisture (Weeks 31–35, August)</strong> and root-nodule nitrogen fixation. Proper topsoil pH (6.2–6.8) is vital for symbiotic rhizobia bacteria.
+            </p>
+
+            <div class="grid grid-cols-2 gap-3 mb-6 p-4 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-200/60 dark:border-emerald-800/50 text-xs">
+              <div>
+                <span class="text-stone-500 dark:text-stone-400 block text-[11px]">Historical Mean</span>
+                <span class="font-bold text-stone-900 dark:text-white text-sm">42.5 bu/acre</span>
+                <span class="text-[10px] text-stone-400 block">~2.9 metric tons/ha</span>
+              </div>
+              <div>
+                <span class="text-stone-500 dark:text-stone-400 block text-[11px]">Model Accuracy</span>
+                <span class="font-bold text-emerald-700 dark:text-emerald-400 text-sm">R² = 0.9260</span>
+                <span class="text-[10px] text-stone-400 block">RMSE = 2.79 bu/acre</span>
+              </div>
+            </div>
+
+            <button onclick="startPredictionForCrop('soybean')" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md group-hover:shadow-emerald-600/20">
+              <i data-lucide="calculator" class="w-4 h-4"></i>
+              <span>Predict Soybean Yield 🌱</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION: HOW CROPSENSE AI WORKS IN 3 STEPS -->
+      <div class="mb-14">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Simple 3-Step Process</span>
+          <h2 class="text-2xl sm:text-3xl font-black font-display text-stone-900 dark:text-white mt-1">
+            How CropSense AI Works for Farmers
+          </h2>
+          <p class="text-stone-500 dark:text-stone-400 text-xs sm:text-sm mt-2">
+            No complex coding or statistics required. Enter your local field conditions and receive actionable harvest intelligence.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <div class="agri-card p-6 border-t-4 border-t-emerald-600 rounded-3xl relative">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-lg font-black mb-4">
+              1
+            </div>
+            <h3 class="text-base font-bold text-stone-900 dark:text-white mb-2">Select Crop & Field Region</h3>
+            <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+              Choose Corn or Soybean and specify your agricultural zone. You can also load real historical seasons (e.g. 2012 Drought, 2017 Bountiful Harvest) with one click.
+            </p>
+          </div>
+
+          <div class="agri-card p-6 border-t-4 border-t-amber-500 rounded-3xl relative">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center text-lg font-black mb-4">
+              2
+            </div>
+            <h3 class="text-base font-bold text-stone-900 dark:text-white mb-2">Adjust Weather & Soil Sliders</h3>
+            <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+              Use intuitive sliders to set anticipated seasonal rainfall, daytime peak summer temperature, soil pH, and topsoil organic matter with real-time feedback badges.
+            </p>
+          </div>
+
+          <div class="agri-card p-6 border-t-4 border-t-sky-500 rounded-3xl relative">
+            <div class="w-12 h-12 rounded-2xl bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 flex items-center justify-center text-lg font-black mb-4">
+              3
+            </div>
+            <h3 class="text-base font-bold text-stone-900 dark:text-white mb-2">Get Prediction & Farm Advice</h3>
+            <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+              Instantly view predicted harvest yield with 95% confidence intervals, a radial dial sweep, soil horizon health scores, and personalized field management guidance.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION: SCIENTIFIC RIGOR STRIP -->
+      <div class="agri-card p-8 rounded-3xl border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-[#131f17]/50 mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+          <div class="p-4">
+            <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center mx-auto mb-3">
+              <i data-lucide="cloud-sun" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-black text-xl text-stone-900 dark:text-white mb-1">NASA Daymet v3</h4>
+            <p class="text-[11px] text-stone-500 dark:text-stone-400">Weekly surface weather, radiation, and vapor pressure deficit across 52 weeks.</p>
+          </div>
+
+          <div class="p-4">
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-3">
+              <i data-lucide="layers" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-black text-xl text-stone-900 dark:text-white mb-1">USDA gSSURGO</h4>
+            <p class="text-[11px] text-stone-500 dark:text-stone-400">Subterranean soil physics stratified across 6 depth increments (0 to 200 cm).</p>
+          </div>
+
+          <div class="p-4">
+            <div class="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 flex items-center justify-center mx-auto mb-3">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-black text-xl text-stone-900 dark:text-white mb-1">Zero Data Leakage</h4>
+            <p class="text-[11px] text-stone-500 dark:text-stone-400">Strict 5-fold cross-validation and 800-record holdout validation with Pipeline encapsulation.</p>
+          </div>
+
+          <div class="p-4">
+            <div class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 flex items-center justify-center mx-auto mb-3">
+              <i data-lucide="sparkles" class="w-5 h-5"></i>
+            </div>
+            <h4 class="font-black text-xl text-stone-900 dark:text-white mb-1">Explainable AI</h4>
+            <p class="text-[11px] text-stone-500 dark:text-stone-400">Transparent factor attribution detailing heat shock, soil organic matter, and moisture impacts.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== TAB 1: YIELD PREDICTION ==================== -->
+    <section id="tab-predict" class="hidden py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto section-enter">
+      
+      <!-- HERO BANNER: FERTILE AGRICULTURAL PANORAMA -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#164e32] via-[#227048] to-[#1b3d2b] dark:from-[#0d281a] dark:via-[#163825] dark:to-[#091f14] text-white p-6 sm:p-10 shadow-xl mb-10 border border-emerald-600/30">
+        <div class="absolute inset-0 opacity-15 agri-furrow-pattern"></div>
+        
+        <div class="relative z-10 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-800/80 border border-emerald-400/30 text-emerald-200 text-xs font-bold mb-3 backdrop-blur-md shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>Live Machine Learning Inference Engine</span>
+          </div>
+
+          <h1 class="text-2xl sm:text-4xl font-black font-display tracking-tight text-white leading-tight mb-3">
+            Farmer Yield Predictor & Field Simulator
+          </h1>
+
+          <p class="text-emerald-100/90 text-xs sm:text-sm leading-relaxed mb-4 font-normal">
+            Adjust your expected seasonal climate and soil characteristics below. Click <strong>"Predict Crop Yield"</strong> to calculate your expected harvest and receive actionable agronomic advisory.
+          </p>
+        </div>
+      </div>
+
+      <!-- STEP 1: CROP SELECTION CARDS -->
+      <div class="mb-10">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold font-display text-stone-900 dark:text-white flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-[#227048] dark:bg-[#10b981] text-white text-xs flex items-center justify-center font-extrabold shadow-sm">1</span>
+              <span>Select Target Crop</span>
+            </h2>
+            <p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Toggle between Corn (*Zea mays*) and Soybean (*Glycine max*).</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- CORN CARD -->
+          <div id="card-crop-corn" onclick="selectCrop('corn')" class="agri-card agri-interactive-card p-6 border-2 transition-all cursor-pointer selected-corn border-[#f59e0b] relative overflow-hidden group">
+            <div class="flex items-start justify-between">
+              <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center text-3xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                  <span class="animate-plant-sway">🌽</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold font-display text-stone-900 dark:text-white flex items-center gap-2">
+                    <span>Corn (Maize)</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-bold uppercase tracking-wide">Cereal Grain</span>
+                  </h3>
+                  <p class="text-stone-500 dark:text-stone-400 text-xs font-medium">Standard 56 lb / Bushel • Starch Endosperm</p>
+                  <div class="mt-2 flex flex-wrap gap-2">
+                    <span class="badge-chip bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">Mean: 137.4 bu/acre</span>
+                    <span class="badge-chip bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300">~8.6 t/ha (62.8 kg/bu)</span>
+                  </div>
+                </div>
+              </div>
+              <div id="check-corn" class="w-7 h-7 rounded-full bg-[#f59e0b] text-white flex items-center justify-center shadow-md">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-stone-200/60 dark:border-stone-800 text-xs text-stone-600 dark:text-stone-300 flex justify-between items-center">
+              <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5 text-amber-500"></i> Critical Silking: Weeks 27–31 (July)</span>
+              <span class="font-bold text-amber-700 dark:text-amber-400">Extreme Heat Sensitivity</span>
+            </div>
+          </div>
+
+          <!-- SOYBEAN CARD -->
+          <div id="card-crop-soybean" onclick="selectCrop('soybean')" class="agri-card agri-interactive-card p-6 border-2 transition-all cursor-pointer border-transparent relative overflow-hidden group">
+            <div class="flex items-start justify-between">
+              <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
+                  <span class="animate-plant-sway">🌱</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold font-display text-stone-900 dark:text-white flex items-center gap-2">
+                    <span>Soybean</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 font-bold uppercase tracking-wide">Oilseed Legume</span>
+                  </h3>
+                  <p class="text-stone-500 dark:text-stone-400 text-xs font-medium">Standard 60 lb / Bushel • Nitrogen-Fixing Root Nodules</p>
+                  <div class="mt-2 flex flex-wrap gap-2">
+                    <span class="badge-chip bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Mean: 42.5 bu/acre</span>
+                    <span class="badge-chip bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300">~2.9 t/ha (67.3 kg/bu)</span>
+                  </div>
+                </div>
+              </div>
+              <div id="check-soy" class="w-7 h-7 rounded-full bg-[#10b981] text-white hidden items-center justify-center shadow-md">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-stone-200/60 dark:border-stone-800 text-xs text-stone-600 dark:text-stone-300 flex justify-between items-center">
+              <span class="flex items-center gap-1.5"><i data-lucide="droplets" class="w-3.5 h-3.5 text-blue-500"></i> Critical Pod Fill: Weeks 31–35 (August)</span>
+              <span class="font-bold text-emerald-700 dark:text-emerald-400">Moisture-Deficit Sensitive</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- STEP 2: FIELD INPUTS & PREDICTION RESULTS (TWO-COLUMN INTERACTIVE LAYOUT) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- FORM COLUMN (7 COLS) -->
+        <div class="lg:col-span-7 agri-card p-6 sm:p-8">
+          
+          <div class="flex items-center justify-between mb-6 pb-4 border-b border-stone-200 dark:border-stone-800">
+            <div>
+              <h2 class="text-xl font-bold font-display text-stone-900 dark:text-white flex items-center gap-2">
+                <span class="w-7 h-7 rounded-full bg-[#227048] dark:bg-[#10b981] text-white text-xs flex items-center justify-center font-extrabold shadow-sm">2</span>
+                <span>Enter Field & Environmental Parameters</span>
+              </h2>
+              <p class="text-stone-500 dark:text-stone-400 text-xs mt-0.5">Calibrated ranges reflect 105 US agricultural counties.</p>
+            </div>
+
+            <!-- Mode Selector Switch -->
+            <div class="flex bg-[#eeede5] dark:bg-[#1c2e23] p-1 rounded-xl text-xs font-bold border border-[#e0ded4] dark:border-[#2d4838]">
+              <button id="mode-farmer" onclick="setMode('farmer')" class="px-3 py-1.5 rounded-lg bg-white dark:bg-[#111a14] text-[#164e32] dark:text-[#34d399] shadow-sm transition-all">
+                Farmer Mode
+              </button>
+              <button id="mode-agronomist" onclick="setMode('agronomist')" class="px-3 py-1.5 rounded-lg text-stone-600 dark:text-stone-400 transition-all">
+                Agronomist Mode
+              </button>
+            </div>
+          </div>
+
+          <form id="predictionForm" onsubmit="handlePredictSubmit(event)">
+
+            <!-- FIELD 1: REGION SELECTOR & HISTORICAL BENCHMARK LOADER -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+              <div>
+                <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  <span>Target Agricultural Region</span>
+                </label>
+                <select id="input-region" class="w-full px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-[#111a14] text-stone-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all shadow-sm">
+                  <option value="Central Corn Belt (Iowa/Illinois)">Iowa & Central Illinois (Deep Prairie Loam)</option>
+                  <option value="Eastern Corn Belt (Indiana/Ohio)">Indiana & Ohio (Moderate Precipitation)</option>
+                  <option value="Western Corn Belt (Nebraska/Kansas)">Nebraska & Kansas (Semi-Arid, High Evapotranspiration)</option>
+                  <option value="Northern Corn Belt (Minnesota/Dakotas)">Minnesota & Dakotas (Short Season, Cold Soil Springs)</option>
+                  <option value="Southern Corn Belt (Missouri/Kentucky)">Missouri & Kentucky (Higher Thermal Units & Drought Risk)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <i data-lucide="history" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span>Load Historical Season Data</span>
+                </label>
+                <select id="input-historical-preset" onchange="handleHistoricalSelect(event)" class="w-full px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-[#111a14] text-stone-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all shadow-sm">
+                  <option value="custom">✏️ Custom Field Settings</option>
+                  <option value="bountiful">🌾 2017 Bountiful Harvest (560mm Rain, 28.2°C)</option>
+                  <option value="drought">☀️ 2012 Severe Drought (270mm Rain, 35.1°C)</option>
+                  <option value="average">🚜 2004 Baseline Season (510mm Rain, 27.5°C)</option>
+                  <option value="flood">💧 1993 Great Midwest Flood (880mm Rain)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- FIELD 2: SEASONAL RAINFALL SLIDER -->
+            <div class="mb-5 p-4 rounded-2xl bg-sky-50/50 dark:bg-[#12232e]/50 border border-sky-200/70 dark:border-sky-800/60 agri-range-container transition-all">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-stone-800 dark:text-stone-200 flex items-center gap-1.5">
+                  <i data-lucide="cloud-rain" class="w-4 h-4 text-sky-500 animate-dew-pulse"></i>
+                  <span>Total Growing Season Precipitation</span>
+                </span>
+                <div class="flex items-center gap-2">
+                  <span id="feedback-rainfall" class="agri-slider-feedback bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300">🌿 Optimal Hydrology</span>
+                  <span id="label-rainfall" class="text-sm font-black text-sky-700 dark:text-sky-300 px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900/60">520 mm (20.5 in)</span>
+                </div>
+              </div>
+              <p class="text-[11px] text-stone-500 dark:text-stone-400 mb-2">Total accumulated rain from planting to harvest maturity.</p>
+              <input type="range" id="input-rainfall" min="200" max="950" step="10" value="520" oninput="updateRangeLabels()">
+              <div class="flex justify-between text-[10px] text-stone-400 font-medium mt-1">
+                <span>200 mm (Severe Drought)</span>
+                <span>520 mm (Optimal)</span>
+                <span>950 mm (Heavy Saturation)</span>
+              </div>
+            </div>
+
+            <!-- FIELD 3: TEMPERATURE CONTROLS (TWO-COLUMN) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+              
+              <!-- Peak Daytime Temperature -->
+              <div class="p-4 rounded-2xl bg-amber-50/50 dark:bg-[#251f15]/50 border border-amber-200/70 dark:border-amber-800/60 agri-range-container">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-xs font-bold text-stone-800 dark:text-stone-200 flex items-center gap-1.5">
+                    <i data-lucide="sun" class="w-4 h-4 text-amber-500"></i>
+                    <span>Mid-Season Peak Temp</span>
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <span id="feedback-temp-peak" class="agri-slider-feedback bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">☀️ Optimal</span>
+                    <span id="label-temp-peak" class="text-xs font-black text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/60">28.0 °C (82.4 °F)</span>
+                  </div>
+                </div>
+                <p class="text-[10px] text-stone-500 dark:text-stone-400 mb-2">Flowering / silking period average max daily temperature.</p>
+                <input type="range" id="input-temp-peak" min="20" max="38" step="0.5" value="28.0" oninput="updateRangeLabels()">
+                <div class="flex justify-between text-[10px] text-stone-400 font-medium mt-1">
+                  <span>20 °C</span>
+                  <span>28 °C (Ideal)</span>
+                  <span>38 °C (Desiccation)</span>
+                </div>
+              </div>
+
+              <!-- Nighttime Minimum Temperature -->
+              <div class="p-4 rounded-2xl bg-indigo-50/50 dark:bg-[#1a1c2e]/50 border border-indigo-200/70 dark:border-indigo-800/60 agri-range-container">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-xs font-bold text-stone-800 dark:text-stone-200 flex items-center gap-1.5">
+                    <i data-lucide="moon" class="w-4 h-4 text-indigo-400"></i>
+                    <span>Night Minimum Temp</span>
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <span id="feedback-temp-night" class="agri-slider-feedback bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">🌙 Ideal</span>
+                    <span id="label-temp-night" class="text-xs font-black text-indigo-700 dark:text-indigo-300 px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900/60">16.5 °C (61.7 °F)</span>
+                  </div>
+                </div>
+                <p class="text-[10px] text-stone-500 dark:text-stone-400 mb-2">Warm nights increase dark respiratory carbon loss.</p>
+                <input type="range" id="input-temp-night" min="10" max="25" step="0.5" value="16.5" oninput="updateRangeLabels()">
+                <div class="flex justify-between text-[10px] text-stone-400 font-medium mt-1">
+                  <span>10 °C (Cool)</span>
+                  <span>16.5 °C (Optimal)</span>
+                  <span>25 °C (Warm)</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- FIELD 4: SOIL HEALTH CONTROLS (SOIL TEXTURE, PH, ORGANIC MATTER) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+              
+              <!-- Soil Texture -->
+              <div>
+                <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <i data-lucide="layers" class="w-3.5 h-3.5 text-[#3d2918] dark:text-amber-600"></i>
+                  <span>Soil Texture</span>
+                </label>
+                <select id="input-texture" onchange="triggerLiveRecalcIfActive()" class="w-full px-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-[#111a14] text-stone-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none shadow-sm">
+                  <option value="Silt Loam" selected>Silt Loam (Max Water Capacity)</option>
+                  <option value="Clay Loam">Clay Loam (Rich Humus & Nutrients)</option>
+                  <option value="Loam">Standard Loam (Balanced Porosity)</option>
+                  <option value="Sandy Loam">Sandy Loam (Rapid Drainage)</option>
+                  <option value="Clay">High Clay (Slow Drainage)</option>
+                </select>
+              </div>
+
+              <!-- Soil pH Slider -->
+              <div class="p-3 rounded-xl bg-emerald-50/50 dark:bg-[#13231a]/50 border border-emerald-200/70 dark:border-emerald-800/60 agri-range-container">
+                <div class="flex justify-between items-center mb-0.5">
+                  <span class="text-xs font-bold text-stone-800 dark:text-stone-200">Soil pH</span>
+                  <div class="flex items-center gap-1">
+                    <span id="feedback-ph" class="agri-slider-feedback bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 text-[9px] py-0">Prime</span>
+                    <span id="label-ph" class="text-xs font-bold text-emerald-700 dark:text-emerald-400">6.5</span>
+                  </div>
+                </div>
+                <input type="range" id="input-ph" min="5.0" max="8.2" step="0.1" value="6.5" oninput="updateRangeLabels()">
+                <div class="flex justify-between text-[10px] text-stone-400 font-medium">
+                  <span>5.0 (Acid)</span>
+                  <span>6.5 (Ideal)</span>
+                  <span>8.2 (Alkali)</span>
+                </div>
+              </div>
+
+              <!-- Organic Matter % Slider -->
+              <div class="p-3 rounded-xl bg-amber-50/50 dark:bg-[#251f15]/50 border border-amber-200/70 dark:border-amber-800/60 agri-range-container">
+                <div class="flex justify-between items-center mb-0.5">
+                  <span class="text-xs font-bold text-stone-800 dark:text-stone-200">Organic Matter</span>
+                  <div class="flex items-center gap-1">
+                    <span id="feedback-om" class="agri-slider-feedback bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 text-[9px] py-0">Rich</span>
+                    <span id="label-om" class="text-xs font-bold text-amber-700 dark:text-amber-400">3.2%</span>
+                  </div>
+                </div>
+                <input type="range" id="input-om" min="1.0" max="6.0" step="0.1" value="3.2" oninput="updateRangeLabels()">
+                <div class="flex justify-between text-[10px] text-stone-400 font-medium">
+                  <span>1.0% (Poor)</span>
+                  <span>3.2% (Good)</span>
+                  <span>6.0% (Rich)</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- FIELD 5: MANAGEMENT & PRACTICES (PLANTING WINDOW & IRRIGATION) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              
+              <!-- Planting Progress Window -->
+              <div>
+                <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  <span>Planting Progress Window</span>
+                </label>
+                <select id="input-planting" onchange="triggerLiveRecalcIfActive()" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-[#111a14] text-stone-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none shadow-sm">
+                  <option value="Early (Early April)">Early (Early to Mid-April) • Frost Vulnerability</option>
+                  <option value="Optimal (Late April - Early May)" selected>Optimal (Late April - Early May) • Maximum Solar Interception</option>
+                  <option value="Late (Late May - June)">Late (Late May to June) • Truncated Grain Fill</option>
+                </select>
+              </div>
+
+              <!-- Supplementary Irrigation Toggle -->
+              <div class="flex items-center justify-between p-3 rounded-xl bg-stone-50 dark:bg-[#1c2e23] border border-stone-200 dark:border-[#2d4838]">
+                <div>
+                  <span class="text-xs font-bold text-stone-800 dark:text-stone-200 block">Supplementary Irrigation</span>
+                  <span class="text-[11px] text-stone-500 dark:text-stone-400">+100 mm water buffer in dry spells</span>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" id="input-irrigation" onchange="triggerLiveRecalcIfActive()" class="sr-only peer">
+                  <div class="w-11 h-6 bg-stone-300 peer-focus:outline-none rounded-full peer dark:bg-stone-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#227048] dark:peer-checked:bg-[#10b981]"></div>
+                </label>
+              </div>
+
+            </div>
+
+            <!-- QUICK SCENARIO PRESETS -->
+            <div class="mb-6 flex flex-wrap items-center gap-2">
+              <span class="text-xs font-bold text-stone-500 dark:text-stone-400 flex items-center gap-1">
+                <i data-lucide="sparkle" class="w-3.5 h-3.5 text-amber-500"></i>
+                <span>Quick Presets:</span>
+              </span>
+              <button type="button" onclick="loadScenario('ideal')" class="px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold hover:bg-emerald-100 transition-colors shadow-sm">
+                🌾 Bountiful Year
+              </button>
+              <button type="button" onclick="loadScenario('drought')" class="px-3 py-1.5 rounded-lg bg-red-50 dark:bg-red-950/60 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800 text-xs font-bold hover:bg-red-100 transition-colors shadow-sm">
+                ☀️ 2012 Severe Drought
+              </button>
+              <button type="button" onclick="loadScenario('average')" class="px-3 py-1.5 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700 text-xs font-bold hover:bg-stone-200 transition-colors shadow-sm">
+                🚜 Historical Average
+              </button>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <button type="submit" id="submitBtn" class="w-full py-4 rounded-2xl agri-btn-primary font-black font-display text-base flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:shadow-emerald-700/25 transition-all">
+              <i data-lucide="sprout" class="w-5 h-5 animate-plant-sway"></i>
+              <span id="btnText">Predict Crop Yield</span>
+            </button>
+          </form>
+
+        </div>
+
+        <!-- RESULTS COLUMN (5 COLS) -->
+        <div class="lg:col-span-5">
+          
+          <div id="resultsCard" class="agri-card p-6 sm:p-8 sticky top-28 transition-all">
+            
+            <!-- Default / Awaiting State -->
+            <div id="resultsEmpty" class="text-center py-12">
+              <div class="w-20 h-20 rounded-3xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center mb-4 shadow-sm border border-emerald-100 dark:border-emerald-900/60">
+                <i data-lucide="wheat" class="w-10 h-10 animate-plant-sway"></i>
+              </div>
+              <h3 class="text-xl font-bold font-display text-stone-800 dark:text-stone-200 mb-1">Awaiting Prediction</h3>
+              <p class="text-xs text-stone-500 dark:text-stone-400 max-w-xs mx-auto leading-relaxed">
+                Adjust your farm parameters on the left and click "Predict Crop Yield" to run genuine XGBoost inference.
+              </p>
+            </div>
+
+            <!-- Loading Sprout Sequence (Appears during inference) -->
+            <div id="resultsLoading" class="hidden text-center py-12">
+              <div class="w-20 h-20 rounded-3xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 mx-auto flex items-center justify-center mb-4 shadow-md animate-sprout-grow">
+                <i data-lucide="seedling" class="w-10 h-10 animate-plant-sway"></i>
+              </div>
+              <h3 id="loadingStageText" class="text-lg font-bold font-display text-stone-800 dark:text-stone-200 mb-1">Simulating Crop Canopy...</h3>
+              <p class="text-xs text-stone-500 dark:text-stone-400">Evaluating root-zone moisture & thermal thresholds...</p>
+            </div>
+
+            <!-- Populated Results Content -->
+            <div id="resultsContent" class="hidden">
+              
+              <!-- Header & Unit Switcher -->
+              <div class="flex items-center justify-between pb-4 border-b border-stone-200 dark:border-stone-800">
+                <div class="flex items-center gap-2">
+                  <span id="res-crop-badge" class="badge-chip bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">Corn</span>
+                  <span class="text-xs text-stone-500 font-semibold">Tuned XGBoost Output</span>
+                </div>
+
+                <!-- 3-Way Unit Toggle -->
+                <div class="flex bg-[#eeede5] dark:bg-[#1c2e23] p-0.5 rounded-lg text-[11px] font-bold border border-[#e0ded4] dark:border-[#2d4838]">
+                  <button id="unit-bu" onclick="switchYieldUnit('bu_acre')" class="px-2.5 py-1 rounded-md bg-white dark:bg-[#111a14] shadow-sm text-emerald-800 dark:text-emerald-300">bu/ac</button>
+                  <button id="unit-qtl" onclick="switchYieldUnit('quintal_acre')" class="px-2.5 py-1 rounded-md text-stone-500 hover:text-stone-900 dark:hover:text-white">qtl/ac</button>
+                  <button id="unit-t" onclick="switchYieldUnit('t_ha')" class="px-2.5 py-1 rounded-md text-stone-500 hover:text-stone-900 dark:hover:text-white">t/ha</button>
+                </div>
+              </div>
+
+              <!-- RADIAL HARVEST YIELD GAUGE & NUMBER HERO -->
+              <div class="py-5 text-center">
+                
+                <!-- Explicit Location Tag: Where the prediction value is shown -->
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800 text-[11px] font-extrabold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 mb-3 shadow-xs">
+                  <i data-lucide="target" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
+                  <span>Forecasted Harvest Yield</span>
+                </div>
+
+                <!-- Harmonious Speedometer Dial Sized to Text Proportion -->
+                <div class="radial-gauge-container mb-1">
+                  <svg class="radial-gauge-svg" viewBox="0 0 270 150">
+                    <defs>
+                      <linearGradient id="yieldGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ef4444" />
+                        <stop offset="25%" stop-color="#f59e0b" />
+                        <stop offset="60%" stop-color="#10b981" />
+                        <stop offset="100%" stop-color="#047857" />
+                      </linearGradient>
+                    </defs>
+                    <!-- Background Arc Track (Center 135,135; Radius 95, Stroke 14) -->
+                    <path class="radial-gauge-track" d="M 40 135 A 95 95 0 0 1 230 135" />
+                    <!-- Dynamic Colored Needle Fill -->
+                    <path id="yieldGaugeFill" class="radial-gauge-fill" d="M 40 135 A 95 95 0 0 1 230 135" stroke="url(#yieldGaugeGrad)" style="stroke-dasharray: 299; stroke-dashoffset: 299;" />
+                  </svg>
+                  
+                  <!-- Positioned Safely Below the Arc Curve with Generous Headroom -->
+                  <div class="radial-gauge-center">
+                    <div id="res-yield-value" class="text-3xl sm:text-[36px] font-black font-display tracking-tight text-[#164e32] dark:text-[#34d399] leading-none">--</div>
+                    <div id="res-yield-unit" class="text-[10px] font-bold text-stone-500 dark:text-stone-400 uppercase tracking-widest mt-2">BUSHELS / ACRE</div>
+                  </div>
+                </div>
+
+                <!-- Dial Scale Flank Markers (Placed Side-wise outside the arc for 100% arc visibility) -->
+                <div class="flex items-center justify-between px-4 max-w-[280px] mx-auto -mt-1 mb-3 text-[11px] font-bold text-stone-500 dark:text-stone-400">
+                  <div class="flex items-center gap-1.5 bg-stone-100 dark:bg-stone-800/80 px-2 py-0.5 rounded-lg border border-stone-200/50 dark:border-stone-700/50 shadow-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                    <span>0 bu/ac</span>
+                  </div>
+                  <div class="flex items-center gap-1.5 bg-stone-100 dark:bg-stone-800/80 px-2 py-0.5 rounded-lg border border-stone-200/50 dark:border-stone-700/50 shadow-xs">
+                    <span id="res-gauge-max-label">240 bu/ac</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  </div>
+                </div>
+
+                <!-- Secondary Yield Equivalents Strip -->
+                <div class="flex justify-center items-center gap-3 text-xs font-semibold text-stone-600 dark:text-stone-400 mb-4">
+                  <span id="res-equiv-kg" class="bg-stone-100 dark:bg-stone-800/80 px-3 py-1 rounded-full border border-stone-200/60 dark:border-stone-700/60 shadow-xs">-- kg/ha</span>
+                  <span id="res-equiv-qtl" class="bg-stone-100 dark:bg-stone-800/80 px-3 py-1 rounded-full border border-stone-200/60 dark:border-stone-700/60 shadow-xs">-- qtl/acre</span>
+                </div>
+
+                <!-- FARMER DECISION & PLANTING ADVISORY CARD: "SHOULD YOU PLANT?" -->
+                <div id="res-decision-card" class="mb-4 p-4 rounded-2xl border transition-all text-left bg-white dark:bg-[#15231b] border-emerald-200 dark:border-emerald-800/70 shadow-sm">
+                  <div class="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-stone-200/70 dark:border-stone-800">
+                    <div class="flex items-center gap-2.5">
+                      <div id="res-decision-icon-box" class="w-8 h-8 rounded-xl flex items-center justify-center bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                        <i id="res-decision-icon" data-lucide="check-circle-2" class="w-4 h-4"></i>
+                      </div>
+                      <div>
+                        <div class="text-[10px] font-extrabold uppercase tracking-wider text-stone-400 dark:text-stone-500">Planting Decision Guidance</div>
+                        <div id="res-decision-title" class="text-xs sm:text-sm font-black text-stone-900 dark:text-white">Favorable Conditions — Proceed with Planting</div>
+                      </div>
+                    </div>
+                    <span id="res-decision-badge" class="badge-chip bg-emerald-700 dark:bg-emerald-600 text-white text-[10px] font-black uppercase tracking-wider px-2 py-0.5">RECOMMENDED</span>
+                  </div>
+
+                  <!-- Break-even vs Predicted Comparison Strip -->
+                  <div class="grid grid-cols-2 gap-2 p-2 rounded-xl bg-stone-50 dark:bg-[#1a2b20]/60 mb-2 text-xs">
+                    <div>
+                      <span class="text-[10px] text-stone-500 block">Est. Break-Even Yield:</span>
+                      <span id="res-breakeven-val" class="font-bold text-stone-800 dark:text-stone-200">34.0 bu/ac</span>
+                    </div>
+                    <div class="text-right">
+                      <span class="text-[10px] text-stone-500 block">Net Profit Buffer:</span>
+                      <span id="res-margin-val" class="font-bold text-emerald-600 dark:text-emerald-400">+15.6%</span>
+                    </div>
+                  </div>
+
+                  <!-- Actionable Farmer Advisory -->
+                  <p id="res-decision-text" class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+                    Evaluated against operating costs and 39-year USDA regional climatology.
+                  </p>
+                </div>
+
+                <!-- Confidence Interval & County Comparison Badge -->
+                <div class="p-3.5 rounded-2xl bg-stone-50 dark:bg-[#16241b] border border-stone-200 dark:border-stone-800 text-left">
+                  <div class="flex justify-between items-center text-xs mb-1">
+                    <span class="text-stone-500">95% Prediction Interval:</span>
+                    <span id="res-ci-range" class="font-bold text-stone-800 dark:text-stone-200">-- to -- bu/ac</span>
+                  </div>
+                  <div class="flex justify-between items-center text-xs mb-2">
+                    <span class="text-stone-500">County Benchmark Status:</span>
+                    <span id="res-bench-status" class="font-bold text-emerald-700 dark:text-emerald-400">--</span>
+                  </div>
+                  <div class="text-[11px] text-stone-500">
+                    <div class="flex justify-between mb-1">
+                      <span>105-County Historical Mean:</span>
+                      <span id="res-bench-label" class="font-bold text-stone-800 dark:text-stone-200">137.4 bu/ac</span>
+                    </div>
+                    <div class="w-full bg-stone-200 dark:bg-stone-700 h-2 rounded-full overflow-hidden">
+                      <div id="res-bar-benchmark" class="bg-stone-400 dark:bg-stone-500 h-full rounded-full transition-all duration-1000" style="width: 62%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SOIL HEALTH & HYDRAULIC HORIZON METER -->
+              <div class="mb-5 p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs font-bold text-emerald-900 dark:text-emerald-300 flex items-center gap-1.5">
+                    <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i>
+                    <span>Root-Zone Soil Health Index</span>
+                  </span>
+                  <span id="res-soil-badge" class="badge-chip bg-[#227048] text-white text-xs">--/100</span>
+                </div>
+                
+                <div class="mb-2">
+                  <div class="flex justify-between text-[10px] text-stone-500 dark:text-stone-400 mb-1">
+                    <span>Topsoil (0–15 cm)</span>
+                    <span>Root Zone (15–60 cm)</span>
+                    <span>Subsoil Hydrology</span>
+                  </div>
+                  <div id="soilHorizonBar" class="soil-horizon-bar" style="--horizon-pct: 50%;"></div>
+                </div>
+
+                <!-- Interactive 3-Tier Soil Stratum Horizon Explorer -->
+                <div class="soil-horizon-strata mb-3">
+                  <div id="stratum-topsoil" onclick="selectSoilStratum('topsoil')" class="soil-stratum-card active">
+                    <span class="text-[10px] font-bold text-stone-900 dark:text-white block">🌱 Topsoil (0–15cm)</span>
+                    <span class="text-[9px] text-emerald-700 dark:text-emerald-400 font-semibold block mt-0.5">Humus & Mineral</span>
+                  </div>
+                  <div id="stratum-rootzone" onclick="selectSoilStratum('rootzone')" class="soil-stratum-card">
+                    <span class="text-[10px] font-bold text-stone-900 dark:text-white block">🌾 Root Zone (15–60cm)</span>
+                    <span class="text-[9px] text-amber-700 dark:text-amber-400 font-semibold block mt-0.5">Water Buffer</span>
+                  </div>
+                  <div id="stratum-subsoil" onclick="selectSoilStratum('subsoil')" class="soil-stratum-card">
+                    <span class="text-[10px] font-bold text-stone-900 dark:text-white block">💧 Subsoil (60–150cm)</span>
+                    <span class="text-[9px] text-sky-700 dark:text-sky-400 font-semibold block mt-0.5">Capillary Supply</span>
+                  </div>
+                </div>
+
+                <p id="res-soil-desc" class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed mb-2 p-2.5 rounded-xl bg-white/70 dark:bg-[#111a14]/60 border border-stone-200/50 dark:border-stone-800">
+                  Optimal organic matter reservoir and silt loam texture provide robust water retention through mid-summer reproductive heat.
+                </p>
+                <div id="res-limiting-box" class="hidden text-[11px] text-amber-800 dark:text-amber-300 bg-amber-100/70 dark:bg-amber-900/40 p-2 rounded-lg border border-amber-300 dark:border-amber-700">
+                  <span class="font-bold">⚠️ Limiting Agronomic Factor:</span> <span id="res-limiting-text">None</span>
+                </div>
+              </div>
+
+              <!-- EXPLAINABILITY & FEATURE IMPACTS -->
+              <div class="mb-5">
+                <span class="text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider block mb-2 flex items-center gap-1.5">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span>Key Influencing Factors (Explainable AI)</span>
+                </span>
+                <div id="res-factors-list" class="space-y-2"></div>
+              </div>
+
+              <!-- PRACTICAL FARMER GUIDANCE -->
+              <div class="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 text-xs mb-5">
+                <span class="font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1.5 mb-1">
+                  <i data-lucide="lightbulb" class="w-4 h-4 text-amber-600"></i>
+                  <span>Field Management Recommendation</span>
+                </span>
+                <p id="res-guidance-text" class="text-stone-700 dark:text-stone-300 leading-relaxed">
+                  Weather conditions fall within favorable physiological parameters. Ensure nitrogen side-dressing is executed prior to canopy closure.
+                </p>
+              </div>
+
+              <!-- SCIENTIFIC DISCLAIMER -->
+              <p class="text-[10px] text-stone-400 leading-normal text-center">
+                Calibrated against USDA-NASS & Daymet v3 meteorological records. Actual yields may vary with field hail damage, pest pressure, and hybrid genetics.
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== TAB 2: MODEL BENCHMARK & METHODOLOGY ==================== -->
+    <section id="tab-models" class="hidden py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto section-enter">
+      <div class="mb-8">
+        <h1 class="text-3xl font-extrabold font-display text-stone-900 dark:text-white mb-2 flex items-center gap-3">
+          <i data-lucide="award" class="w-8 h-8 text-amber-500"></i>
+          <span>17-Algorithm Regression Benchmark</span>
+        </h1>
+        <p class="text-stone-600 dark:text-stone-300 text-sm max-w-3xl leading-relaxed">
+          Comprehensive benchmark across Linear, Regularized (Ridge, Lasso, ElasticNet), Tree Ensembles (Random Forest, Extra Trees, Gradient Boosting, HistGradientBoosting, AdaBoost), Kernel (SVR RBF), Distance (KNN), Boosting (XGBoost, LightGBM), and Meta-Ensembles (Voting, Stacking). Evaluated on 5-fold CV (3,200 training records) and holdout validation on 800 untouched test records with zero data leakage.
+        </p>
+      </div>
+
+      <!-- Crop Selector Toggle for Benchmark Table -->
+      <div class="flex flex-wrap gap-2 mb-6">
+        <button id="btn-corn-table" onclick="showModelTable('corn')" class="px-5 py-2.5 rounded-xl text-xs font-black bg-[#f59e0b] text-white shadow-sm flex items-center gap-2 transition-all">
+          <span>🌽 Corn Benchmark (406 Features)</span>
+        </button>
+        <button id="btn-soy-table" onclick="showModelTable('soybean')" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-[#eeede5] dark:bg-[#1c2e23] text-stone-700 dark:text-stone-300 border border-[#e0ded4] dark:border-[#2d4838] flex items-center gap-2 transition-all">
+          <span>🌱 Soybean Benchmark (409 Features)</span>
+        </button>
+      </div>
+
+      <!-- Benchmark Table Card -->
+      <div class="agri-card p-6 overflow-x-auto mb-10 shadow-lg">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-stone-200 dark:border-stone-700 text-stone-500 font-bold uppercase tracking-wider">
+              <th class="py-3 px-4">Algorithm</th>
+              <th class="py-3 px-4">Family</th>
+              <th class="py-3 px-4">5-Fold CV R²</th>
+              <th class="py-3 px-4">5-Fold CV RMSE</th>
+              <th class="py-3 px-4">Test Set R²</th>
+              <th class="py-3 px-4">Test Set RMSE</th>
+              <th class="py-3 px-4">Test Set MAE</th>
+              <th class="py-3 px-4">Test MAPE</th>
+              <th class="py-3 px-4">Deployment Status</th>
+            </tr>
+          </thead>
+          <tbody id="modelTableBody" class="divide-y divide-stone-100 dark:divide-stone-800 font-medium"></tbody>
+        </table>
+      </div>
+
+      <!-- Scientific Architecture Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="agri-card p-6 border-t-4 border-t-emerald-600 stagger-1">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mb-3">
+            <i data-lucide="layers" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-sm text-stone-900 dark:text-white mb-1">Non-Linear Thermal Thresholds</h3>
+          <p class="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+            Gradient boosted decision trees capture severe step-function penalties when mid-summer temperatures exceed 31°C, whereas linear models underestimate extreme drought shocks.
+          </p>
+        </div>
+
+        <div class="agri-card p-6 border-t-4 border-t-amber-500 stagger-2">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center mb-3">
+            <i data-lucide="filter" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-sm text-stone-900 dark:text-white mb-1">Domain-Specific Snow Pruning</h3>
+          <p class="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+            Pruning 25 zero-variance summer snow features (weeks 21–35) prevented gradient dilution and eliminated collinear noise without sacrificing informational fidelity.
+          </p>
+        </div>
+
+        <div class="agri-card p-6 border-t-4 border-t-sky-500 stagger-3">
+          <div class="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 flex items-center justify-center mb-3">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-sm text-stone-900 dark:text-white mb-1">Zero Data Leakage Pipelines</h3>
+          <p class="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+            Scalers and imputers were fitted exclusively on training folds within scikit-learn Pipelines, ensuring holdout test sets remained completely unobserved during training.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: FIELD GUIDANCE ==================== -->
+    <section id="tab-guidance" class="hidden py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto section-enter">
+      <div class="mb-8">
+        <h1 class="text-3xl font-extrabold font-display text-stone-900 dark:text-white mb-2 flex items-center gap-3">
+          <i data-lucide="compass" class="w-8 h-8 text-emerald-600"></i>
+          <span>Farmer Guidance & Field Agroclimatic Management</span>
+        </h1>
+        <p class="text-stone-600 dark:text-stone-300 text-sm max-w-3xl leading-relaxed">
+          Actionable field management recommendations distilled from 39 years of US Corn Belt data and sensitivity analysis.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <div class="agri-card p-6 border-l-4 border-l-amber-500 stagger-1">
+          <h3 class="text-base font-bold text-stone-900 dark:text-white mb-2 flex items-center gap-2">
+            <i data-lucide="thermometer-sun" class="w-5 h-5 text-amber-500"></i>
+            <span>Mid-Season Heat Stress Mitigation</span>
+          </h3>
+          <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed mb-3">
+            Week 28–32 maximum temperatures exceeding 31°C cause silk desiccation and reduced kernel counts in corn, and flower abortion in soybean.
+          </p>
+          <ul class="text-xs text-stone-600 dark:text-stone-300 space-y-1.5 list-disc list-inside">
+            <li><strong>Early Planting Window:</strong> Plant late April to advance pollination prior to late July heat waves.</li>
+            <li><strong>Maturity Diversity:</strong> Plant multiple seed varieties with differing Growing Degree Day (GDD) requirements to stagger pollination.</li>
+            <li><strong>Canopy Shading:</strong> Maintain uniform plant spacing to maximize solar interception and reduce ground evaporation.</li>
+          </ul>
+        </div>
+
+        <div class="agri-card p-6 border-l-4 border-l-emerald-600 stagger-2">
+          <h3 class="text-base font-bold text-stone-900 dark:text-white mb-2 flex items-center gap-2">
+            <i data-lucide="droplet" class="w-5 h-5 text-emerald-600"></i>
+            <span>Soil Organic Matter & Available Water Capacity</span>
+          </h3>
+          <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed mb-3">
+            Topsoil organic matter (0–15 cm) demonstrates consistent positive yield elasticity, especially during moisture-deficit growing seasons.
+          </p>
+          <ul class="text-xs text-stone-600 dark:text-stone-300 space-y-1.5 list-disc list-inside">
+            <li><strong>Water Retention:</strong> Each 1% increase in organic matter retains approximately 20,000 gallons of plant-available water per acre.</li>
+            <li><strong>Cover Cropping:</strong> Cereal rye or clover winter covers build organic carbon and reduce soil erosion.</li>
+            <li><strong>Conservation Tillage:</strong> Strip-till and no-till minimize soil carbon oxidation and preserve seedbed moisture.</li>
+          </ul>
+        </div>
+
+        <div class="agri-card p-6 border-l-4 border-l-sky-600 stagger-3">
+          <h3 class="text-base font-bold text-stone-900 dark:text-white mb-2 flex items-center gap-2">
+            <i data-lucide="test-tube-2" class="w-5 h-5 text-sky-600"></i>
+            <span>Soil pH Regulation & Nutrient Bioavailability</span>
+          </h3>
+          <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed mb-3">
+            Topsoil pH controls phosphorus availability and is essential for Bradyrhizobium nitrogen fixation in soybean root nodules.
+          </p>
+          <ul class="text-xs text-stone-600 dark:text-stone-300 space-y-1.5 list-disc list-inside">
+            <li><strong>Target pH Range:</strong> Maintain topsoil pH between 6.2 and 6.8 for optimal corn and soybean nutrient absorption.</li>
+            <li><strong>Acidic Soils (pH &lt; 6.0):</strong> Apply agricultural limestone based on soil buffer tests to prevent nodulation failure.</li>
+            <li><strong>Alkaline Soils (pH &gt; 7.4):</strong> Monitor for iron deficiency chlorosis (IDC) in soybeans.</li>
+          </ul>
+        </div>
+
+        <div class="agri-card p-6 border-l-4 border-l-purple-600 stagger-4">
+          <h3 class="text-base font-bold text-stone-900 dark:text-white mb-2 flex items-center gap-2">
+            <i data-lucide="calendar-clock" class="w-5 h-5 text-purple-600"></i>
+            <span>Planting Window Phenology</span>
+          </h3>
+          <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed mb-3">
+            Delayed planting past late May reduces yield potential by 0.7% to 1.1% per day due to curtailed seasonal solar radiation interception.
+          </p>
+          <ul class="text-xs text-stone-600 dark:text-stone-300 space-y-1.5 list-disc list-inside">
+            <li><strong>Soil Temperature:</strong> Wait for sustained 10°C (50°F) soil temperature at 5 cm depth with an upward warming forecast.</li>
+            <li><strong>Compaction Prevention:</strong> Avoid planting in overly wet seedbeds to prevent sidewall compaction.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: DATA EXPLORER & DATASET INTEGRATION ==================== -->
+    <section id="tab-data" class="hidden py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto section-enter">
+      <div class="mb-8">
+        <h1 class="text-3xl font-extrabold font-display text-stone-900 dark:text-white mb-2 flex items-center gap-3">
+          <i data-lucide="database" class="w-8 h-8 text-blue-500"></i>
+          <span>Dataset Schema & Live Historical Data Explorer</span>
+        </h1>
+        <p class="text-stone-600 dark:text-stone-300 text-sm max-w-3xl leading-relaxed">
+          Integrated directly with the 4,000 empirical county records (1980–2018). Explore summary statistics, feature dictionary, and load actual historical seasons directly into the predictor.
+        </p>
+      </div>
+
+      <!-- DATASET OVERVIEW CARDS (LIVE BACKEND DATA) -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="agri-card p-6 border-t-4 border-t-emerald-600">
+          <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block mb-1">Total Crop Seasons</span>
+          <span class="text-3xl font-black font-display text-stone-900 dark:text-white">4,000</span>
+          <span class="text-xs text-stone-500 block mt-1">105 Counties × 39 Years</span>
+        </div>
+        <div class="agri-card p-6 border-t-4 border-t-amber-500">
+          <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block mb-1">Corn Features Pruned</span>
+          <span class="text-3xl font-black font-display text-stone-900 dark:text-white">406 Active</span>
+          <span class="text-xs text-stone-500 block mt-1">25 zero-variance snow pruned</span>
+        </div>
+        <div class="agri-card p-6 border-t-4 border-t-sky-500">
+          <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block mb-1">Soybean Features</span>
+          <span class="text-3xl font-black font-display text-stone-900 dark:text-white">409 Active</span>
+          <span class="text-xs text-stone-500 block mt-1">21 zero-variance snow pruned</span>
+        </div>
+        <div class="agri-card p-6 border-t-4 border-t-purple-500">
+          <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block mb-1">Data Completeness</span>
+          <span class="text-3xl font-black font-display text-emerald-600 dark:text-emerald-400">100%</span>
+          <span class="text-xs text-stone-500 block mt-1">0 missing, 0 duplicates</span>
+        </div>
+      </div>
+
+      <!-- FEATURE IMPORTANCE & EXPLAINABILITY (FROM TRAINED PRODUCTION MODEL) -->
+      <div class="agri-card p-6 mb-8">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-base text-stone-900 dark:text-white flex items-center gap-2">
+            <i data-lucide="bar-chart-2" class="w-5 h-5 text-amber-500"></i>
+            <span>Top Influential Features (Tuned XGBoost Production Model)</span>
+          </h3>
+          <span id="data-explorer-crop-badge" class="badge-chip bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">Corn (406 Features)</span>
+        </div>
+        <p class="text-xs text-stone-500 dark:text-stone-400 mb-4">
+          Empirical feature importances derived directly from gradient boosted decision tree split frequency and gain.
+        </p>
+        <div id="topFeaturesContainer" class="space-y-3">
+          <!-- Populated dynamically by app.js from /api/dataset/features -->
+        </div>
+      </div>
+
+      <!-- VARIABLE NOMENCLATURE & SCIENTIFIC SOURCES -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="agri-card p-6 stagger-1">
+          <h3 class="font-bold text-sm text-stone-900 dark:text-white mb-2 flex items-center gap-2">
+            <i data-lucide="cloud" class="w-4 h-4 text-sky-500"></i>
+            <span>Meteorological Features (NASA Daymet v3 • 312 Parameters)</span>
+          </h3>
+          <p class="text-xs text-stone-500 dark:text-stone-400 mb-3">
+            52 weekly aggregates for 6 surface climate variables ($W_{a,b}$, where $a \in 1..6$, $b \in 1..52$):
+          </p>
+          <ul class="text-xs text-stone-700 dark:text-stone-300 space-y-1 list-disc list-inside">
+            <li><strong>W1:</strong> Day Length (seconds/day)</li>
+            <li><strong>W2:</strong> Precipitation (mm/week)</li>
+            <li><strong>W3:</strong> Snow Water Equivalent (kg/m²) — Summer weeks 21–35 pruned</li>
+            <li><strong>W4:</strong> Maximum Daily Air Temperature (°C) — Weeks 28–32 critical</li>
+            <li><strong>W5:</strong> Minimum Daily Air Temperature (°C)</li>
+            <li><strong>W6:</strong> Vapor Pressure Deficit (Pa)</li>
+          </ul>
+        </div>
+
+        <div class="agri-card p-6 stagger-2">
+          <h3 class="font-bold text-sm text-stone-900 dark:text-white mb-2 flex items-center gap-2">
+            <i data-lucide="shovel" class="w-4 h-4 text-amber-600"></i>
+            <span>Soil Horizon Features (USDA gSSURGO • 60 Parameters)</span>
+          </h3>
+          <p class="text-xs text-stone-500 dark:text-stone-400 mb-3">
+            10 physical/chemical properties across 6 depth increments (0 to 200 cm) + 8 surface metrics:
+          </p>
+          <ul class="text-xs text-stone-700 dark:text-stone-300 space-y-1 list-disc list-inside">
+            <li><strong>S1:</strong> Cation Exchange Capacity (CEC7, meq/100g)</li>
+            <li><strong>S2:</strong> Saturated Hydraulic Conductivity (Ksat, μm/s)</li>
+            <li><strong>S3:</strong> Bulk Density (g/cm³)</li>
+            <li><strong>S4:</strong> Available Water Capacity (AWC, cm/cm)</li>
+            <li><strong>S5, S6, S9:</strong> Clay, Sand, and Silt fractions (%)</li>
+            <li><strong>S7, S8:</strong> Organic Matter (%) & Soil pH in 1:1 water</li>
+            <li><strong>SS1-SS8:</strong> Surface slope, AWS, water table depth, and drainage class</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="mt-16 border-t border-[#e0ded4] dark:border-[#213529] bg-white/60 dark:bg-[#111a14]/60 py-8 px-4 sm:px-6 lg:px-8 text-xs text-stone-500 dark:text-stone-400 transition-colors">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-2">
+        <i data-lucide="sprout" class="w-4 h-4 text-emerald-600"></i>
+        <span class="font-bold text-stone-800 dark:text-stone-200">CropSense AI Platform</span>
+        <span>•</span>
+        <span>AI-Powered Crop Yield Forecasting & Soil Intelligence</span>
+      </div>
+      <div class="text-center md:text-right">
+        <div class="font-bold text-stone-800 dark:text-stone-200 text-sm">@CropSense AI</div>
+        <div class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Build by Soumyadip Chattopadhyay</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

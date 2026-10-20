@@ -1,0 +1,18 @@
+Model,CV R² (Mean ± Std),CV RMSE (bu/ac),CV MAE (bu/ac),Test R²,Test RMSE (bu/ac),Test MAE (bu/ac),Test MAPE (%)
+Tuned XGBoost (Selected Final Champion),0.9174 ± 0.0056,2.90 ± 0.09,2.20,0.926,2.79,2.09,5.41
+SVR (RBF Kernel),0.9048 ± 0.0100,3.11 ± 0.15,2.31,0.9208,2.88,2.17,5.54
+LightGBM Regressor,0.9099 ± 0.0037,3.03 ± 0.04,2.30,0.9143,3.0,2.27,5.89
+XGBoost Regressor (Baseline),0.9095 ± 0.0073,3.03 ± 0.09,2.30,0.9129,3.02,2.3,5.92
+HistGradientBoosting,0.9087 ± 0.0033,3.05 ± 0.05,2.31,0.9114,3.05,2.31,5.97
+Stacking Regressor (RF + XGB + Ridge -> Ridge),0.9091 ± 0.0062,3.04 ± 0.06,2.33,0.91,3.08,2.35,5.99
+Multiple Linear Regression,0.8559 ± 0.1060,3.65 ± 1.22,2.39,0.9081,3.11,2.33,5.92
+Voting Ensemble (RF + XGB + LGB + ET),0.8991 ± 0.0061,3.20 ± 0.08,2.43,0.9038,3.18,2.42,6.28
+Extra Trees Regressor,0.8913 ± 0.0082,3.33 ± 0.12,2.53,0.9012,3.22,2.46,6.38
+Gradient Boosting (GBR),0.8809 ± 0.0060,3.48 ± 0.08,2.69,0.8839,3.49,2.69,7.03
+Random Forest Regressor,0.8727 ± 0.0054,3.60 ± 0.07,2.73,0.8765,3.6,2.72,7.09
+Ridge Regression,0.8750 ± 0.0106,3.56 ± 0.13,2.72,0.8752,3.62,2.78,7.18
+K-Nearest Neighbors (KNN),0.8351 ± 0.0157,4.09 ± 0.17,3.07,0.8502,3.97,3.01,7.84
+ElasticNet,0.8542 ± 0.0098,3.85 ± 0.08,2.96,0.8441,4.05,3.15,8.26
+Lasso Regression,0.8447 ± 0.0116,3.97 ± 0.10,3.05,0.8331,4.19,3.26,8.58
+Decision Tree Regressor,0.7140 ± 0.0149,5.40 ± 0.06,4.04,0.7388,5.24,3.87,9.86
+AdaBoost Regressor,0.6037 ± 0.0215,6.35 ± 0.22,5.01,0.6,6.48,5.1,13.68

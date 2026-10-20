@@ -1,0 +1,16 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Temporary test & scratch scripts
+verify_live.py
+scratch/
+
+# Environment and OS
+.venv/
+venv/
+.DS_Store
+Thumbs.db
+*.log
